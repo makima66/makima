@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -334,7 +335,9 @@
             box-shadow: 0 10px 30px rgba(106, 48, 147, 0.3);
             opacity: 0;
             transform: translateY(30px);
-            animation: fadeInUp 1s forwards 0.9s;
+		    animation: 
+		        fadeInUp 1s forwards 0.9s, 
+		        heroPulse 2.5s infinite 2s; /* Пульсация начнется после появления кнопки */
             z-index: 4;
         }
 
@@ -347,6 +350,17 @@
             to {
                 opacity: 1;
                 transform: translateY(0);
+            }
+        }
+        @keyframes heroPulse {
+            0% {
+                box-shadow: 0 10px 30px rgba(106, 48, 147, 0.3), 0 0 0 0 rgba(106, 48, 147, 0.4);
+            }
+            70% {
+                box-shadow: 0 10px 30px rgba(106, 48, 147, 0.3), 0 0 0 15px rgba(106, 48, 147, 0);
+            }
+            100% {
+                box-shadow: 0 10px 30px rgba(106, 48, 147, 0.3), 0 0 0 0 rgba(106, 48, 147, 0);
             }
         }
 
@@ -3287,7 +3301,158 @@ background: linear-gradient(90deg,
     transform: rotate(180deg) scaleY(-1);
 }
 
+/* Flex Cards Section - НОВЫЕ СТИЛИ */
+.flex-cards-section {
+    padding: 100px 0;
+    background-color: var(--dark-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
+.flex-wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-container {
+    height: 400px;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    width: 100%;
+    max-width: 900px; 
+    padding: 0 20px;
+}
+
+.flex-container .card {
+    width: 110px;
+    border-radius: 1rem;
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+    overflow: hidden;
+    margin: 0 10px;
+    display: flex;
+    align-items: flex-end;
+    transition: .6s cubic-bezier(.28,-0.03,0,.99);
+    box-shadow: 0px 10px 30px -5px rgba(0,0,0,0.5);
+    position: relative;
+    border: 2px solid transparent;
+}
+
+.flex-container .card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(10, 10, 10, 0.8), transparent 50%);
+    border-radius: 1rem;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.flex-container .card:hover::after {
+    opacity: 0.8;
+}
+
+.flex-container .card > .row {
+    color: white;
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    width: 100%;
+    padding: 10px 0;
+    z-index: 1;
+    position: relative;
+}
+
+.flex-container .card > .row > .icon {
+    background: linear-gradient(135deg, var(--purple), var(--gold));
+    color: white;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 15px;
+    flex-shrink: 0;
+    font-size: 20px;
+    transition: var(--transition);
+}
+
+.flex-container .card > .row > .description {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    overflow: hidden;
+    height: 80px;
+    width: calc(100% - 80px); /* Adjust based on icon size and margin */
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all .3s ease .3s;
+}
+
+.flex-container .description p {
+    color: var(--text-gray);
+    padding-top: 5px;
+    font-size: 14px;
+}
+
+.flex-container .description h4 {
+    text-transform: uppercase;
+    color: var(--gold-light);
+    font-weight: 600;
+}
+
+.flex-container input {
+    display: none;
+}
+
+.flex-container input:checked + label {
+    width: 600px;
+    border-color: var(--gold);
+}
+
+.flex-container input:checked + label .icon {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+}
+
+.flex-container input:checked + label .description {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+.flex-container .card[for="c1"] { background-image: url('FONukrainecs1.png'); }
+.flex-container .card[for="c2"] { background-image: url('FONukrainecs2.jpg'); }
+.flex-container .card[for="c3"] { background-image: url('FONukrainecs3.png'); }
+.flex-container .card[for="c4"] { background-image: url('FONukrainecs4.png'); }
+
+@media (max-width: 900px) {
+    .flex-container {
+        flex-direction: column;
+        height: auto;
+        align-items: center;
+        gap: 20px;
+    }
+    .flex-container .card,
+    .flex-container input:checked + label {
+        width: clamp(300px, 90vw, 500px);
+        height: 100px;
+    }
+    .flex-container input:checked + label {
+        height: 200px;
+    }
+    .flex-container .card > .row {
+        align-items: center;
+    }
+}
 </style>
 
 
@@ -3542,6 +3707,116 @@ background: linear-gradient(90deg,
 
 <section class="common-bg-section">
 
+<!-- Recent Works Gallery Section -->
+<section class="recent-works-section">
+    <div class="container">
+        <h2 class="section-title">Останні роботи</h2>
+        <div class="recent-works-gallery">
+            <!-- Левое размытие -->
+            <div class="gallery-fade-left"></div>
+            <!-- Правое размытие -->
+            <div class="gallery-fade-right"></div>
+            
+            <div class="recent-works-track">
+                <!-- Первый набор изображений -->
+                <div class="recent-work-item">
+                    <img src="work13.webp" alt="Робота 1">
+                </div>
+                <div class="recent-work-item">
+                    <img src="work14.webp" alt="Робота 2">
+                </div>
+                <div class="recent-work-item">
+                    <img src="work3.webp" alt="Робота 3">
+                </div>
+                <div class="recent-work-item">
+                    <img src="work4.webp" alt="Робота 4">
+                </div>
+                <div class="recent-work-item">
+                    <img src="work5.webp" alt="Робота 5">
+                </div>
+                <div class="recent-work-item">
+                    <img src="work6.webp" alt="Робота 6">
+                </div>
+                
+                <!-- Дубликат для бесконечной анимации -->
+                <div class="recent-work-item">
+                    <img src="work13.png" alt="Робота 1">
+                </div>
+                <div class="recent-work-item">
+                    <img src="work14.webp" alt="Робота 2">
+                </div>
+                <div class="recent-work-item">
+                    <img src="work3.webp" alt="Робота 3">
+                </div>
+                <div class="recent-work-item">
+                    <img src="work4.webp" alt="Робота 4">
+                </div>
+                <div class="recent-work-item">
+                    <img src="work5.webp" alt="Робота 5">
+                </div>
+                <div class="recent-work-item">
+                    <img src="work6.webp" alt="Робота 6">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Flex Cards Section -- НОВЫЙ РАЗДЕЛ -->
+<section class="flex-cards-section">
+    <div class="container">
+        <h2 class="section-title">Категорії робіт</h2>
+        <div class="flex-wrapper">
+            <div class="flex-container">
+                <!-- Card 1 -->
+                <input type="radio" name="slide" id="c1" checked>
+                <label for="c1" class="card">
+                    <div class="row">
+                        <div class="icon"><i class="fas fa-desktop"></i></div>
+                        <div class="description">
+                            <h4>Веб-дизайн</h4>
+                            <p>Створення унікальних та функціональних дизайнів для сайтів.</p>
+                        </div>
+                    </div>
+                </label>
+                <!-- Card 2 -->
+                <input type="radio" name="slide" id="c2">
+                <label for="c2" class="card">
+                    <div class="row">
+                        <div class="icon"><i class="fas fa-gamepad"></i></div>
+                        <div class="description">
+                            <h4>Ігровий UI/UX</h4>
+                            <p>Інтуїтивно зрозумілі інтерфейси для ігрових проектів.</p>
+                        </div>
+                    </div>
+                </label>
+                <!-- Card 3 -->
+                <input type="radio" name="slide" id="c3">
+                <label for="c3" class="card">
+                    <div class="row">
+                        <div class="icon"><i class="fas fa-palette"></i></div>
+                        <div class="description">
+                            <h4>Брендінг</h4>
+                            <p>Розробка фірмового стилю, логотипів та банерів.</p>
+                        </div>
+                    </div>
+                </label>
+                <!-- Card 4 -->
+                <input type="radio" name="slide" id="c4">
+                <label for="c4" class="card">
+                    <div class="row">
+                        <div class="icon"><i class="fas fa-pen-nib"></i></div>
+                        <div class="description">
+                            <h4>Ілюстрації</h4>
+                            <p>Створення артів та ілюстрацій для будь-яких цілей.</p>
+                        </div>
+                    </div>
+                </label>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Contact Section -->
 <section class="contact-section" id="contact">
     <div class="container">
@@ -3579,7 +3854,6 @@ background: linear-gradient(90deg,
             </div>
             
             <!-- Правая часть - Видео презентация -->
-<!-- В секции contact-section замените правую часть на этот код -->
 <div class="video-presentation">
     <div class="order-block">
         <div class="header-text">ОСТАННЄ ЗАМОВЛЕННЯ</div>
@@ -3605,88 +3879,7 @@ background: linear-gradient(90deg,
 </div>
 
 </section>
-
-<!-- Recent Works Gallery Section -->
-<section class="recent-works-section">
-    <div class="container">
-        <h2 class="section-title">Останні роботи</h2>
-        <div class="recent-works-gallery">
-            <!-- Левое размытие -->
-            <div class="gallery-fade-left"></div>
-            <!-- Правое размытие -->
-            <div class="gallery-fade-right"></div>
-            
-            <div class="recent-works-track">
-                <!-- Первый набор изображений -->
-                <div class="recent-work-item">
-                    <img src="work13.webp" alt="Робота 1">
-                </div>
-                <div class="recent-work-item">
-                    <img src="work14.webp" alt="Робота 2">
-                </div>
-                <div class="recent-work-item">
-                    <img src="work3.webp" alt="Робота 3">
-                </div>
-                <div class="recent-work-item">
-                    <img src="work4.webp" alt="Робота 4">
-                </div>
-                <div class="recent-work-item">
-                    <img src="work5.webp" alt="Робота 5">
-                </div>
-                <div class="recent-work-item">
-                    <img src="work6.webp" alt="Робота 6">
-                </div>
-                
-                <!-- Дубликат для бесконечной анимации -->
-                <div class="recent-work-item">
-                    <img src="work13.webp" alt="Робота 1">
-                </div>
-                <div class="recent-work-item">
-                    <img src="work14.webp" alt="Робота 2">
-                </div>
-                <div class="recent-work-item">
-                    <img src="work3.webp" alt="Робота 3">
-                </div>
-                <div class="recent-work-item">
-                    <img src="work4.webp" alt="Робота 4">
-                </div>
-                <div class="recent-work-item">
-                    <img src="work5.webp" alt="Робота 5">
-                </div>
-                <div class="recent-work-item">
-                    <img src="work6.webp" alt="Робота 6">
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!--  <section class="darrek">
-<div class="music-player">
-  <div class="player-controls">
-    <button id="play-pause-btn" class="control-btn">
-      <i class="fas fa-play" id="play-icon"></i>
-      <i class="fas fa-pause hidden" id="pause-icon"></i>
-    </button>
-    <div class="track-info">
-      <span id="current-song">Azizi Gibson - Barbie</span>
-    </div>
-    <div class="progress-container">
-      <div class="progress-bar" id="progress-bar"></div>
-      <span class="time" id="current-time">0:00</span>
-      <span class="time" id="duration">0:00</span>
-    </div>
-    <div class="volume-control">
-      <i class="fas fa-volume-up volume-icon"></i>
-      <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.7">
-    </div>
-  </div>
-  <audio id="audio-player" src="AziziGibson.mp3"></audio>
-</div>
-
-   
-
-  </section>
- -->        
+     
 
  <!-- Glowing Border Footer -->
         <footer class="glowing-footer">
@@ -4452,7 +4645,7 @@ document.addEventListener('DOMContentLoaded', function() {
             musicIcon.classList.remove('fa-volume-up');
             musicIcon.classList.add('fa-volume-mute');
         } else {
-            musicIcon.classList.remove('fa-volume-mute');
+            musicIcon.classList.remove('fa-mute');
             musicIcon.classList.add('fa-volume-up');
         }
     });
@@ -4828,6 +5021,3 @@ document.addEventListener('DOMContentLoaded', function() {
     </script>
 </body>
 </html>
-
-
-
