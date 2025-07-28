@@ -35,12 +35,15 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 30px;
-            margin-bottom: 60px; /* Уменьшили отступ снизу */
+            margin-bottom: 60px;
             overflow: hidden;
-            transition: max-height 1s ease; /* плавный переход высоты */
+            transition: max-height 1s ease; 
             padding: 50px;
         }
-        
+
+
+
+
         .portfolio-item.hidden {
             display: none;
         }
@@ -2667,6 +2670,18 @@ background: linear-gradient(90deg,
     /*transform: translateZ(1px);*/
 
 }
+        .portfolio-item.hidden-work {
+    display: none;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.portfolio-grid.show-all .portfolio-item.hidden-work {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
     .recent-works-section {
         padding: 80px 0;
         background: linear-gradient(135deg, rgba(10,10,10,0.95), rgba(20,10,40,0.9));
@@ -3233,6 +3248,46 @@ background: linear-gradient(90deg,
         display: none;
     }
 }
+
+.portfolio-actions {
+    text-align: center;
+    margin-top: 20px;
+    position: relative; /* Добавлено */
+    z-index: 10; /* Добавлено */
+    width: 100%; /* Добавлено */
+}
+
+.showMoreBtn {
+    position: relative; /* Изменено с absolute на relative */
+    display: block;
+    margin: 20px auto 0;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--purple), var(--gold));
+    border-radius: 50%;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 10;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    transition: var(--transition);
+    animation: pulse 2s infinite;
+}
+
+.showMoreBtn:hover {
+    transform: scale(1.1);
+}
+
+.showMoreBtn i {
+    transition: transform 0.3s ease;
+}
+
+.showMoreBtn.expanded i {
+    transform: rotate(180deg) scaleY(-1);
+}
+
+
 </style>
 
 
@@ -3371,33 +3426,37 @@ background: linear-gradient(90deg,
                         <h2 class="portfolio-title">Виконана робота № 12</h2>
                         <p class="portfolio-category">Дизайн</p>
                 </div>
-             </div>
-            <div class="portfolio-item hidden-work">
-                    <img src="work13.png">
+            </div>
+             <div class="portfolio-item hidden-work">
+                <img src="work13.png">
                 <div class="portfolio-overlay">
                         <h2 class="portfolio-title">Виконана робота № 13</h2>
                         <p class="portfolio-category">Дизайн</p>
                 </div>
             </div>
             <div class="portfolio-item hidden-work">
-                    <img src="work14.png">
+                <img src="work14.png">
                 <div class="portfolio-overlay">
                         <h2 class="portfolio-title">Виконана робота № 14</h2>
                         <p class="portfolio-category">Дизайн</p>
                 </div>
             </div>
             <div class="portfolio-item hidden-work">
-                    <img src="work15.png">
+                <img src="work15.png">
                 <div class="portfolio-overlay">
                         <h2 class="portfolio-title">Виконана робота № 15</h2>
                         <p class="portfolio-category">Дизайн</p>
                 </div>
             </div>
+
         </div>
     </div>
-<div class="portfolio-actions" style="text-align: center; margin-top: 20px;">
-    <button class="showMoreBtn expand-btn" id="showMoreBtn"><i class="fas fa-chevron-down"></i></button>
-</div>
+    <div class="portfolio-actions">
+        <button class="showMoreBtn expand-btn" id="showMoreBtn">
+            <i class="fas fa-chevron-down"></i>
+        </button>
+    </div>
+
 
 
 </section>
@@ -3563,7 +3622,7 @@ background: linear-gradient(90deg,
                     <img src="work13.png" alt="Робота 1">
                 </div>
                 <div class="recent-work-item">
-                    <img src="work14.png" alt="Робота 2">
+                    <img src="work14.jpg" alt="Робота 2">
                 </div>
                 <div class="recent-work-item">
                     <img src="work3.jpg" alt="Робота 3">
@@ -3583,7 +3642,7 @@ background: linear-gradient(90deg,
                     <img src="work13.png" alt="Робота 1">
                 </div>
                 <div class="recent-work-item">
-                    <img src="work14.png" alt="Робота 2">
+                    <img src="work14.jpg" alt="Робота 2">
                 </div>
                 <div class="recent-work-item">
                     <img src="work3.jpg" alt="Робота 3">
@@ -4447,25 +4506,36 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 //раскрытие и скрытых работ 
-    document.addEventListener("DOMContentLoaded", function () {
-        const showMoreBtn = document.getElementById("showMoreBtn");
-        const hiddenItems = document.querySelectorAll(".hidden-work");
-        let isExpanded = false;
+document.addEventListener("DOMContentLoaded", function () {
+    const showMoreBtn = document.getElementById("showMoreBtn");
+    const portfolioGrid = document.getElementById("portfolioGrid");
+    let isExpanded = false;
 
-    // Устанавливаем начальную стрелку (вниз)
-    showMoreBtn.innerHTML = '&#9660'; // или '&#9660;' для ▼
-
-        showMoreBtn.addEventListener("click", function () {
-            hiddenItems.forEach(item => {
-                item.style.display = isExpanded ? "none" : "block";
-            });
-
-showMoreBtn.innerHTML = isExpanded ? '&#9660;' : '&#9650;'; // ▼ и ▲
-            isExpanded = !isExpanded;
-
-
-        });
+    showMoreBtn.addEventListener("click", function () {
+        isExpanded = !isExpanded;
+        
+        if (isExpanded) {
+            portfolioGrid.classList.add('show-all');
+            showMoreBtn.innerHTML = '<i class="fas fa-chevron-up"></i>';
+        } else {
+            portfolioGrid.classList.remove('show-all');
+            showMoreBtn.innerHTML = '<i class="fas fa-chevron-down"></i>';
+            
+            // Плавная прокрутка к кнопке после сворачивания
+            setTimeout(() => {
+                showMoreBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 500);
+        }
+        
+        // Плавная прокрутка к новым элементам при раскрытии
+        if (isExpanded) {
+            setTimeout(() => {
+                showMoreBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 100);
+        }
     });
+});
+
 
 document.addEventListener('DOMContentLoaded', function() {
     const portfolioItems = document.querySelectorAll('.portfolio-item');
@@ -4758,3 +4828,6 @@ document.addEventListener('DOMContentLoaded', function() {
     </script>
 </body>
 </html>
+
+
+
