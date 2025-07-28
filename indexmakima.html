@@ -1,0 +1,4744 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Портфолио | Премиум дизайн</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+        <style>
+        :root {
+            --dark-bg: #0a0a0a;
+            --dark-secondary: #1a1a1a;
+            --purple: #6a3093;
+            --purple-light: #9c4dca;
+            --gold: #FFD700;
+            --gold-light: #FFEC8B;
+            --text-light: #f5f5f7;
+            --text-gray: #86868b;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+
+        .portfolio-section {
+            padding: 120px 0;
+            background-color: var(--dark-bg);
+            position: relative;
+        }
+        
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px; /* Уменьшили отступ снизу */
+            overflow: hidden;
+            transition: max-height 1s ease; /* плавный переход высоты */
+            padding: 50px;
+        }
+        
+        .portfolio-item.hidden {
+            display: none;
+        }
+        
+        .portfolio-grid.expanded .portfolio-item.hidden {
+            display: block;
+            animation: fadeIn 0.5s forwards;
+
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .expand-btn {
+            position: relative;
+            bottom: 20px; /* Было 0, меняем на отрицательное значение */
+            display: block;
+            margin: 20px auto 0;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--purple), var(--gold));
+            border-radius: 50%;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 10;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            transition: var(--transition);
+            animation: pulse 2s infinite;
+        }
+        
+        .expand-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .expand-btn i {
+            transition: transform 0.3s ease;
+        }
+        
+        .expand-btn.expanded i {
+            transform: rotate(180deg) scaleY(-1); /* Зеркальное отражение + поворот */
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(255, 215, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Header */
+        header {
+            padding: 25px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            background: rgba(10,10,10,0.95);
+            z-index: 1100;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(106, 48, 147, 0.2);
+            transition: var(--transition);
+        }
+
+        header.scrolled {
+            padding: 15px 0;
+            box-shadow: var(--shadow);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+/*
+.container:before, .container:after{
+  content: '';
+  position: absolute;
+  width: 50%;
+  height: 10%;
+  bottom: 15px;
+  left: 4px;
+  z-index: -1;
+  -webkit-box-shadow: 0 15px 10px rgba(0,0,139,0.6);
+     -moz-box-shadow: 0 15px 10px rgba(0,0,139,0.6);
+       -o-box-shadow: 0 15px 10px rgba(0,0,139,0.6);
+          box-shadow: 0 15px 10px rgba(0,0,139,0.6);
+}
+.container:before{
+    -webkit-transform: rotate(-1deg);
+   -moz-transform: rotate(-1deg);
+     -o-transform: rotate(-1deg);
+        transform: rotate(-1deg);
+}
+
+.container:after{
+  left: auto;
+  right: 4px;
+  -webkit-transform: rotate(1deg);
+   -moz-transform: rotate(1deg);
+     -o-transform: rotate(1deg);
+        transform: rotate(1deg);
+}
+*/
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--purple), var(--gold));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .logo-icon::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255,255,255,0) 0%,
+                rgba(255,255,255,0) 45%,
+                rgba(255,255,255,0.3) 50%,
+                rgba(255,255,255,0) 55%,
+                rgba(255,255,255,0) 100%
+            );
+            transform: rotate(30deg);
+            animation: shine 5s infinite;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--purple), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            position: relative;
+            transition: var(--transition);
+            opacity: 0.9;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+            opacity: 1;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(to right, var(--purple), var(--gold));
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 950px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            margin-top: 80px;
+            background: url(https://i.ibb.co/3y8s20RQ/fon.jpg) 50% calc(7px)/cover no-repeat;
+
+            background-p/*o*/sition: 0 7px;
+        }
+
+.hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: 0;
+        will-change: transform;
+    backface-visibility: hidden;
+}
+
+
+        .hero-content {
+            position: relative;
+            top: -50px;
+            max-width: 700px;
+            z-index: 3;
+        }
+
+        .hero-title {
+            font-size: 72px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            background: linear-gradient(to right, var(--purple), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards 0.3s;
+        }
+
+        .hero-subtitle {
+            font-size: 24px;
+            color: var(--text-gray);
+            margin-bottom: 40px;
+            line-height: 1.5;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards 0.6s;
+        }
+
+        .hero-btn  {
+            display: inline-block;
+            padding: 16px 40px;
+            background: linear-gradient(to right, var(--purple), var(--gold));
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            transition: var(--transition);
+            box-shadow: 0 10px 30px rgba(106, 48, 147, 0.3);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards 0.9s;
+            z-index: 4;
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(106, 48, 147, 0.5);
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Particles animation */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: linear-gradient(to right, var(--purple-light), var(--gold-light));
+            border-radius: 50%;
+            animation: floatParticle linear infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-1000px) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Portfolio Grid */
+        .portfolio-section {
+            padding: 80px 0 40px; /* Уменьшили отступы сверху и снизу */
+            background-color: var(--dark-bg);
+            position: relative;
+            position: relative;
+            
+
+        }
+
+        .section-title {
+            font-size: 48px;
+            margin-bottom: 80px;
+            text-align: center;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(to right, var(--purple), var(--gold));
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+
+
+/* Удаляем все предыдущие стили для .portfolio-item и связанных элементов */
+.portfolio-item {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1/1;
+    border-radius: 16px;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    cursor: pointer;
+    transition: transform 1.2s ease;
+    box-shadow: var(--shadow);
+/*                margin-top: 50px;
+                margin-bottom: 50px;*/
+}
+
+.portfolio-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+    transition: all 1.2s ease;
+    /*backface-visibility: hidden;*/
+    position: absolute;
+    top: 0;
+    left: 0;
+        transform-style: preserve-3d;
+
+    transform: rotateY(0deg);
+
+}
+
+.portfolio-item.hidden {
+    display: none;
+    transform: none !important; /* Сбрасываем трансформации */
+    opacity: 1 !important; /* Сбрасываем прозрачность */
+    z-index: auto !important; /* Сбрасываем z-index */
+}
+
+
+/* Когда grid имеет класс expanded - показываем скрытые элементы */
+.portfolio-grid.expanded .portfolio-item.hidden {
+    display: block;
+    animation: fadeIn 0.5s forwards;
+    transform-style: preserve-3d; /* Восстанавливаем 3D-контекст */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.portfolio-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    /*padding: 20px;*/
+    background: linear-gradient(90deg,rgba(61, 39, 35, 0.9) 0%, rgba(71, 27, 84, 0.9) 35%, rgba(40, 0, 56, 0.9) 100%);
+    border-radius: 16px;
+        transform-style: preserve-3d;
+
+    transform: rotateY(-180deg) translateZ(1px);
+    /*backface-visibility: hidden;*/
+    opacity: 1;
+    transition: all 1.2s ease;
+z-index: 1px;
+}
+
+.portfolio-item:hover img {
+    transform-style: preserve-3d;
+    transform: rotateY(180deg);
+    /*opacity: 0;*/
+    transition: all 1.2s ease;
+}
+
+.portfolio-item:hover .portfolio-overlay {
+    transform-style: preserve-3d;
+    transform: rotateY(0deg) ; /* Сохраняем подъем при появлении */
+    opacity: 1;
+}
+
+/* Стили для текста с эффектом "парения" */
+.portfolio-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: white;
+    /*text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);*/
+    transition: transform 1.2s ease;
+/*    background: rgba(0,0,0,0.3);
+    padding: 20px 46px;
+    border-radius: 8px;*/
+
+    transform-style: preserve-3d;
+    transform: translateZ(100px); ;
+}
+
+
+.portfolio-category {
+    font-size: 15px;
+    color: var(--gold-light);
+    font-weight: 500;
+    transition: transform 1.2s ease;
+/*    background: rgba(0,0,0,0.3);
+    padding: 2px 46px;
+    border-radius: 6px;*/
+        transform-style: preserve-3d;
+    transform: translateZ(100px); ;
+}
+
+        /* Stats Section */
+        .stats-section {
+            padding: 40px 0;
+            background: linear-gradient(135deg, rgba(10,10,10,0.9), rgba(30,15,50,0.8));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,215,0,0.05) 0%, rgba(255,215,0,0) 70%);
+            animation: rotate 20s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 40px 30px;
+            min-width: 250px;
+            background: rgba(20,20,20,0.6);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,215,0,0.1);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        .stat-item.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stat-item:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+            border-color: rgba(255,215,0,0.3);
+        }
+
+        .stat-number {
+            font-size: 60px;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--purple), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-number .number {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+
+        .stat-label {
+            font-size: 18px;
+            color: var(--text-gray);
+            font-weight: 500;
+        }
+
+        /* Reviews Section */
+        .reviews-section {
+            padding: 120px 0;
+            background-color: var(--dark-bg);
+        }
+
+        .reviews-container {
+            display: flex;
+            gap: 30px;
+            overflow-x: auto;
+            padding-bottom: 30px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--gold) var(--dark-bg);
+        }
+
+        .reviews-container::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .reviews-container::-webkit-scrollbar-track {
+            background: var(--dark-bg);
+            border-radius: 10px;
+        }
+
+        .reviews-container::-webkit-scrollbar-thumb {
+            background: linear-gradient(to right, var(--purple), var(--gold));
+            border-radius: 10px;
+        }
+
+        .review-card {
+            min-width: 400px;
+            padding: 40px;
+            background: rgba(20,20,20,0.6);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-left: 4px solid var(--gold);
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateX(50px);
+        }
+
+        .review-card.animate {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .review-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+        }
+
+        .review-text {
+            font-size: 18px;
+            line-height: 1.6;
+            color: var(--text-light);
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+
+        .review-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            /*border: dashed 1px #4a4a5b !important;*/
+            border-radius: 10px;
+            padding: 10px 15px;
+            background: linear-gradient(90deg, 
+        rgba(0, 0, 0, 0.8) 0%, 
+        rgba(106, 48, 147, 0.5) 100%);            
+            border: solid 2px #2b2b2b;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+    }
+
+    .review-author::after {
+    background: linear-gradient(90deg, #9400D3 0%, #8B008B 50%, #483D8B 100%);
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: all 0.5s;
+}
+
+.review-author:hover::after {
+    opacity: 1;
+}
+
+/*.review-author::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient( to right, rgba(106, 48, 147, 0.3) 0%, rgba(156, 77, 202, 0.3) 100%);
+
+    transition: var(--transition);
+    z-index: -1;
+}
+*/
+.review-author:hover::before {
+    left: 0;
+}
+
+.review-author:hover {
+    transform: translateY(-3px);
+    /*box-shadow: 0 5px 15px rgba(106, 48, 147, 0.4);*/
+}
+
+/* Для текста внутри, чтобы оставался читаемым при наведении */
+.review-author:hover .author-name,
+.review-author:hover .author-position {
+    color: white;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.author-avatar {
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    transition: var(--transition);
+}
+
+.review-author:hover .author-avatar {
+    border-color: white;
+    transform: scale(1.05);
+}
+
+        }
+        .review-author:hover {
+            background-color: rgba(40,40,40,0.8);
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--gold);
+        }
+
+        .author-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .author-name {
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 5px;
+        }
+
+        .author-position {
+            font-size: 14px;
+            color: var(--gold);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 120px 0;
+            background: linear-gradient(135deg, rgba(10,10,10,0.95), rgba(20,10,40,0.9));
+            position: relative;
+        }
+
+
+        .contact-title {
+            font-size: 48px;
+            margin-bottom: 30px;
+            background: linear-gradient(to right, var(--text-light), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .contact-text {
+            font-size: 18px;
+            line-height: 1.6;
+            color: var(--text-gray);
+            margin-bottom: 40px;
+        }
+
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--purple), var(--gold));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 20px;
+            transition: var(--transition);
+        }
+
+        .contact-icon:hover {
+            transform: rotate(15deg) scale(1.1);
+        }
+
+        .contact-label {
+            font-size: 16px;
+            color: var(--text-gray);
+            margin-bottom: 5px;
+        }
+
+        .contact-value {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--text-light);
+        }
+
+        /* Contact Form */
+        .contact-form {
+            background: rgba(20,20,20,0.6);
+            padding: 50px;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,215,0,0.1);
+            box-shadow: var(--shadow);
+            opacity: 0;
+            transform: translateX(50px);
+        }
+
+        .contact-form.animate {
+            opacity: 1;
+            transform: translateX(0);
+            transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) 0.2s;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 16px;
+            color: var(--text-gray);
+            margin-bottom: 10px;
+        }
+
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(30,30,30,0.7);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            font-size: 16px;
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
+        }
+
+        .form-textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            display: inline-block;
+            padding: 16px 40px;
+            background: linear-gradient(to right, var(--purple), var(--gold));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 10px 30px rgba(106, 48, 147, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(106, 48, 147, 0.5);
+        }
+
+        .submit-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255,255,255,0) 0%,
+                rgba(255,255,255,0) 45%,
+                rgba(255,255,255,0.3) 50%,
+                rgba(255,255,255,0) 55%,
+                rgba(255,255,255,0) 100%
+            );
+            transform: rotate(30deg);
+            transition: var(--transition);
+        }
+
+        .submit-btn:hover::after {
+            left: 100%;
+        }
+
+        /* Social Links */
+        .social-links {
+            display: flex;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(30,30,30,0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--gold);
+            font-size: 20px;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--purple), var(--gold));
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .social-link i {
+            position: relative;
+            z-index: 1;
+        }
+
+        .social-link:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+            color: white;
+        }
+
+        .social-link:hover::before {
+            opacity: 1;
+        }
+
+/* Glowing Border Footer */
+.glowing-footer {
+    padding: 60px 20px;
+    /*background: var(--dark-bg);*/
+                background: linear-gradient(135deg, rgba(10,10,10,0.95), rgba(20,10,40,0.9));
+
+    display: flex;
+    justify-content: center;
+}
+
+.footer-container {
+    width: 100%;
+    max-width: 1200px;
+}
+
+.footer-border-wrap {
+    position: relative;
+    padding: 2px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--purple), var(--gold));
+    box-shadow: 0 0 15px rgba(106, 48, 147, 0.7),
+                0 0 30px rgba(255, 215, 0, 0.3);
+    animation: borderGlow 3s infinite alternate;
+}
+
+.footer-content {
+    background: var(--dark-secondary);
+    border-radius: 10px;
+    padding: 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 40px;
+}
+
+.footer-brand {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Центрирование по вертикали */
+    height: 100%; /* Занимает всю доступную высоту */
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 15px;
+}
+
+.footer-logo i {
+    font-size: 22px;
+    color: var(--gold);
+}
+
+.footer-copyright {
+    font-size: 14px;
+    color: var(--text-gray);
+    opacity: 0.8;
+}
+
+.footer-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-title {
+            font-size: 18px;
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+}
+
+.footer-title::after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(to right, var(--purple), var(--gold));
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%; /* Занимает всю ширину */
+    align-items: center; /* Центрирование ссылок */
+}
+
+.footer-links li {
+    width: 100%; /* Ширина для центрирования текста */
+    text-align: center; /* Центрирование текста */
+}
+
+.footer-links li a {
+    color: var(--text-gray);
+    text-decoration: none;
+    font-size: 15px;
+    transition: var(--transition);
+    display: inline-block;
+    padding: 0 10px;
+    position: relative;
+}
+
+.footer-links li a:hover {
+    color: var(--gold);
+    transform: translateX(5px);
+}
+
+.footer-links li a::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--gold);
+    transition: var(--transition);
+}
+
+.footer-links li a:hover::before {
+    width: calc(100% - 20px); /* Учитываем padding */
+}
+
+@keyframes borderGlow {
+    0% {
+        box-shadow: 0 0 15px rgba(106, 48, 147, 0.7),
+                    0 0 30px rgba(255, 215, 0, 0.3);
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(106, 48, 147, 0.9),
+                    0 0 40px rgba(255, 215, 0, 0.5);
+    }
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        padding: 30px;
+    }
+    
+    .footer-brand {
+        gap: 20px;
+    }
+    
+    .footer-logo {
+        margin-bottom: 15px;
+    }
+    
+    .footer-title::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .footer-links li a:hover {
+        transform: none; /* Убираем смещение на мобильных */
+    }
+}
+
+        /* Scroll to top button */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--purple), var(--gold));
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 999;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        .scroll-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(30deg); }
+            20% { transform: translateX(100%) rotate(30deg); }
+            100% { transform: translateX(100%) rotate(30deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .contact-info, .contact-form {
+                transform: none !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 48px;
+            }
+            
+            .hero-subtitle {
+                font-size: 18px;
+            }
+            
+            .section-title {
+                font-size: 36px;
+            }
+            
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .review-card {
+                min-width: 300px;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .footer-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+        .stat-number {
+            font-size: 60px;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--purple), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+/* Social Buttons Section */
+.social-section {
+    margin-top: 30px;
+}
+
+.social-title {
+            font-size: 18px;
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+            display: inline-block;
+            /*left: 50%;*/
+            /*transform: translateX(-50%);*/
+        }
+
+.social-title::before {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(to right, var(--purple), var(--gold));
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+}
+
+.social-buttons {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    gap: 22px;
+    width: 100%;
+    max-width: 300px;
+}
+
+.social-button {
+/*    display: flex;
+    align-items: center;
+    padding: 14px 16px;
+    background: rgba(30, 30, 30, 0.8);
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--text-light);
+    transition: var(--transition);
+    border: 1px solid rgba(106, 48, 147, 0.3);
+    position: relative;
+    overflow: hidden;*/
+            display: flex;
+            align-items: center;
+            padding: 12px 30px;
+            background: linear-gradient(to right, var(--purple), var(--gold));
+            color: white;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            transition: var(--transition);
+            box-shadow: 0 10px 30px rgba(106, 48, 147, 0.3);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards 0.9s;
+            z-index: 4;
+
+}
+
+.square-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--purple), var(--gold));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 18px;
+    flex-shrink: 0;
+    margin-right: 15px;
+    transition: var(--transition);
+}
+
+.social-button span {
+    font-size: 16px;
+    font-weight: 500;
+    flex-grow: 1;
+}
+
+.arrow-icon {
+    color: var(--text-gray);
+    font-size: 14px;
+    transition: var(--transition);
+    margin-left: 10px;
+}
+
+.social-button:hover {
+ /*   background: rgba(40, 40, 40, 0.9);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(106, 48, 147, 0.3);
+    border-color: rgba(255, 215, 0, 0.2);*/
+                transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(106, 48, 147, 0.5);
+
+}
+
+.social-button:hover .square-icon {
+    transform: rotate(5deg) scale(1.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.social-button:hover .arrow-icon {
+    color: var(--gold);
+    transform: translateX(3px);
+}
+
+.social-button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(106, 48, 147, 0.1), rgba(255, 215, 0, 0.05));
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.social-button:hover::after {
+    opacity: 1;
+}
+
+@media (max-width: 768px) {
+    .social-buttons {
+        max-width: 100%;
+    }
+    
+    .social-button {
+        padding: 12px 14px;
+    }
+    
+    .square-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+    }
+}
+
+.common-bg-section {
+    background: linear-gradient(135deg, rgba(10,10,10,0.95), rgba(20,10,40,0.9));
+    position: relative;
+}
+
+/* Удалите фоны у этих элементов, так как они теперь наследуют фон от общего контейнера */
+.contact-section {
+    background: transparent !important;
+    padding: 120px 0;
+    position: relative;
+}
+
+.glowing-footer {
+    background: transparent !important;
+    padding: 60px 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.contact-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+/* Общие стили для video-presentation */
+.video-presentation {
+    display: flex;
+    justify-content: flex-end;
+    opacity: 0;
+    transform: translateX(50px);
+    transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+    width: 100%;
+    max-width: 500px;
+    margin-left: auto;
+}
+
+.video-presentation.animate {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Стили для order-block */
+.order-block {
+    position: relative;
+    background-color: var(--dark-secondary);
+    border-radius: 20px;
+    border-left: 4px solid var(--gold);
+    border-right: 4px solid var(--gold);
+    width: 100%;
+    max-width: 550px;
+    padding: 25px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.order-block:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(184, 158, 20, 0.5);
+}
+
+.header-text {
+    text-align: center;
+    color: var(--gold-light);
+    font-size: 22px;
+    font-weight: bold;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+    margin-bottom: 20px;
+}
+
+.image-container img {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 
+        0 10px 30px rgba(106, 48, 147, 0.4),
+        0 -10px 30px rgba(255, 215, 0, 0.3);
+    transition: var(--transition);
+                animation: float 6s ease-in-out infinite;
+
+}
+
+.image-container:hover img {
+    transform: scale(1.02);
+}
+
+.user-info {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    background-color: rgba(30,30,30,0.7);
+    border-radius: 10px;
+    padding: 10px 15px;
+    gap: 12px;
+    transition: var(--transition);
+    background: #151313c7;
+    /*box-shadow: 0 2px 6px rgb(1 1 1);*/
+background: linear-gradient(90deg, 
+        rgba(0, 0, 0, 0.8) 0%, 
+        rgba(106, 48, 147, 0.5) 100%);            
+            border: solid 2px #2b2b2b;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;}
+
+    .user-info::after {
+    background: linear-gradient(90deg, #9400D3 0%, #8B008B 50%, #483D8B 100%);
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: all 0.5s;
+}
+
+.user-info:hover::after {
+    opacity: 1;
+}
+
+    
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    object-fit: cover;
+}
+
+.username {
+    color: var(--text-light);
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.rank {
+    color: var(--gold);
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+/* Адаптация под разные экраны */
+@media (max-width: 1200px) {
+    .contact-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    .video-presentation {
+        margin: 0 auto;
+        justify-content: center;
+        max-width: 100%;
+    }
+    
+    .order-block {
+        max-width: 400px;
+    }
+}
+
+@media (max-width: 768px) {
+    .order-block {
+        padding: 20px;
+    }
+    
+    .header-text {
+        font-size: 20px;
+    }
+    
+    .username {
+        font-size: 15px;
+    }
+    
+    .rank {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .order-block {
+        padding: 15px;
+    }
+    
+    .header-text {
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+    
+    .user-info {
+        padding: 8px 12px;
+    }
+    
+    .avatar {
+        width: 35px;
+        height: 35px;
+    }
+}
+/* Portfolio Modal Styles */
+.portfolio-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.portfolio-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+}
+
+.modal-image {
+    width: 100%;
+    height: 90vh;
+    object-fit: contain;
+    border-radius: 12px;
+    transform: scale(0.8);
+    transition: transform 0.3s ease;
+    margin-bottom: 20px;
+}
+
+
+
+.modal-info {
+    display: flex;
+    align-items: center;
+    gap: 80px;
+    padding: 20px 130px;
+    margin-top: -80px;
+    border-radius: 20px;
+    background: #3d2723;
+    background: linear-gradient(90deg,rgba(61, 39, 35, 0.7) 0%, rgba(71, 27, 84, 0.78) 35%, rgba(40, 0, 56, 0.67) 100%);
+    box-shadow:  0px 2px 4px rgba(420,120,230,0.1), 
+             0px 4px 8px rgba(420,120,230,0.1), 
+             0px 8px 16px rgba(420,120,230,0.1), 
+             0px 16px 32px rgba(420,120,230,0.1);
+    transition: all 70ms ease; 
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+
+    transition: box-shadow 1.2s ease-in-out, 
+                width 1.2s ease-out; /* Добавляем анимацию для тени */
+}
+
+.modal-info:hover {
+/*    background: linear-gradient(90deg, 
+        rgba(106, 48, 147, 0.6) 0%, 
+        rgba(71, 27, 84, 0.7) 35%, 
+        rgba(40, 0, 56, 0.6) 100%);*/
+    box-shadow:  0px 2px 4px rgba(420,120,230,0.2), 
+             0px 4px 8px rgba(420,120,230,0.1), 
+             0px 8px 16px rgba(420,120,230,0.2), 
+             0px 16px 32px rgba(420,120,230,0.1);
+     /* transition: all 0.7s ease;*/
+
+}
+
+
+.modal-info:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+     background: rgba(72,61,139,0.1);
+    transition: width 1.8s ease-out;   
+    z-index: -1;
+
+}
+.modal-info:hover:before {
+    width: 100%;
+}
+
+.modal-info.active {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.3s;
+}
+
+.modal-title {
+    font-size: 28px;
+    margin-bottom: 10px;
+    color: var(--text-light);
+}
+
+.modal-description {
+    color: var(--gold);
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.close-modal {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--purple), var(--gold));
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    transition: var(--transition);
+    z-index: 2;
+    border: none;
+        transition: all 0.3s ease;
+
+}
+
+.close-modal:hover {
+    transform: rotate(90deg) scale(1.1);
+}
+
+.navigation-buttons {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0 20px;
+    pointer-events: none;
+}
+.nav-btn {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--purple), var(--gold));
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    transition: var(--transition);
+    opacity: 0.7;
+    pointer-events: auto;
+    border: none;
+}
+
+.nav-btn:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.nav-btn.prev {
+    left: 20px;
+}
+
+.nav-btn.next {
+    right: 20px;
+}
+#nbip:hover {
+        opacity: 1;
+    transform: scale(1.1);
+}
+#nbin:hover {
+        opacity: 1;
+    transform: scale(1.1);
+}
+@media (max-width: 1024px) {
+    .modal-content {
+        gap: 20px;
+        top: -30px;
+        justify-content: center;
+        align-items: center;
+    }
+    .modal-info{
+        /*margin-top: 1px;*/
+    padding: 10px 0;
+
+}
+    .modal-image {
+        max-height: 70vh;
+    }
+    
+    .modal-title {
+        font-size: 24px;
+    }
+    
+    .modal-description {
+        font-size: 16px;
+    }
+    
+    .close-modal {
+        top: 15px;
+        right: 15px;
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+
+}
+
+
+/* Для десктопов */
+
+
+    @media (max-width: 768px) {
+    .modal-content {
+        max-width: 95%;
+    }
+    
+    .modal-image {
+        max-height: 60vh;
+    }
+    
+    .modal-info {
+        max-width: 90%;
+        padding: 15px;
+    }
+    
+    .modal-title {
+        font-size: 20px;
+    }
+    
+    .modal-description {
+        font-size: 14px;
+    }
+    
+    .close-modal {
+        top: 15px;
+        right: 15px;
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+    
+    .nav-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+
+}
+
+/* Для мобильных */
+@media (max-width: 915px) {
+    #nbip, #nbin {
+        display: flex;
+        /*width: 60px;*/
+        /*height: 60px;*/
+        /*background: linear-gradient(135deg, var(--purple), var(--gold));*/
+        background-color: transparent;
+        margin-left: 10px;
+        margin-right: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+        /*transition: var(--transition);*/
+        opacity: 0.9;
+        pointer-events: auto;
+        border: none;
+    }
+    .modal-title {
+    font-size: 14px;
+    /*margin-bottom: 10px;*/
+    }
+}
+/* Добавлен бургер-меню для мобильных */
+/* Бургер меню */
+.burger-menu {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 22px;
+    cursor: pointer;
+    z-index: 1001;
+    padding: 5px;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.burger-line {
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--purple), var(--gold));
+    border-radius: 2px;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-origin: center;
+    position: relative;
+}
+
+.burger-menu:hover .burger-line {
+    background: linear-gradient(90deg, var(--purple-light), var(--gold-light));
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+}
+/* Анимация превращения в крестик */
+.burger-menu.active .burger-line:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+    background: var(--gold);
+        transition: transform 0.4s ease-out; /* Быстрее */
+
+}
+
+.burger-menu.active .burger-line:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+}
+
+.burger-menu.active .burger-line:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+    background: var(--purple-light);
+}
+
+/* Анимация появления мобильного меню */
+.mobile-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10,10,10,0.98);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transform: translateY(-20px);
+}
+
+.mobile-nav.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+/* Анимация ссылок в меню */
+.mobile-nav-links a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: 500;
+    padding: 10px 20px;
+    border-radius: 8px;
+    /*transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);*/
+    transform: translateX(-30px);
+    opacity: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.mobile-nav.active .mobile-nav-links a {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+
+/* Эффект при наведении на ссылки */
+.mobile-nav-links a:hover {
+    color: var(--gold);
+    /*background: rgba(106, 48, 147, 0.2);*/
+    transform: scale(1.05);
+}
+
+.mobile-nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--purple), var(--gold));
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.mobile-nav-links a:hover::after {
+    width: 100%;
+}
+
+/* Анимация кнопки закрытия */
+.close-mobile-menu {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    width: 40px;
+    height: 40px;
+    color: var(--text-light);
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform: rotate(0deg);
+    opacity: 0;
+}
+
+.mobile-nav.active .close-mobile-menu {
+    opacity: 1;
+    transition-delay: 0.5s;
+}
+
+.close-mobile-menu:hover {
+    color: var(--gold);
+    transform: rotate(90deg);
+    background: rgba(255, 215, 0, 0.1);
+}
+
+
+/* Мобильное меню */
+.mobile-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10,10,10,0.98);
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+}
+
+.mobile-nav.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.mobile-nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    text-align: center;
+}
+
+.mobile-nav-links a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.close-mobile-menu {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    width: 40px;
+    height: 40px;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.burger-menu.active .burger-line:nth-child(2) {
+    opacity: 0;
+}
+
+.burger-menu.active .burger-line:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+}
+
+/* Показываем бургер на мобильных */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
+    
+    .burger-menu {
+        display: flex;
+    }
+}/* Адаптация для iPhone 13 и 13 Max */
+@media (max-width: 390px) {
+    /* Общие стили */
+    .container {
+        /*padding: 0 20px;*/
+    }
+    
+    /* Шрифты */
+    body {
+        font-size: 14px;
+    }
+    
+    /* Шапка */
+    header {
+        /*padding: 15px 0;*/
+        max-width: 390px;
+    }
+    
+    .logo-text {
+        font-size: 20px;
+    }
+    .portfolio-modal{
+        max-width: 390px;
+    }
+
+    .portfolio-modal-active {
+        max-width: 390px;
+
+
+    }
+    .nav-links {
+
+        gap: 20px;
+    }
+    
+    .nav-links a {
+        font-size: 14px;
+    }
+    
+    /* Герой секция */
+    .hero {
+        min-height: 700px;
+        margin-top: 60px;
+        width: 390px;
+
+    }
+    
+    .hero-title {
+        font-size: 36px;
+        margin-bottom: 20px;
+    }
+    
+    .hero-subtitle {
+        font-size: 16px;
+        margin-bottom: 30px;
+    }
+    
+    .hero-btn {
+        padding: 12px 30px;
+        font-size: 16px;
+    }
+    
+    /* Портфолио */
+    .portfolio-section {
+        padding: 60px 0 30px;
+    }
+    
+    .section-title {
+        font-size: 32px;
+        margin-bottom: 50px;
+    }
+    
+    .portfolio-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    /* Статистика */
+    .stat-item {
+        min-width: 100%;
+        padding: 30px 20px;
+    }
+    
+    .stat-number {
+        font-size: 48px;
+        height: 60px;
+    }
+    
+    .stat-label {
+        font-size: 16px;
+    }
+    
+    /* Отзывы */
+    .reviews-section {
+        padding: 80px 0;
+    }
+    
+    .review-card {
+        min-width: 280px;
+        padding: 30px;
+    }
+    
+    .review-text {
+        font-size: 16px;
+    }
+    
+    /* Контакты */
+    .contact-section {
+        padding: 80px 0;
+    }
+    
+    .contact-title {
+        font-size: 32px;
+        margin-bottom: 20px;
+    }
+    
+    .contact-text {
+        font-size: 16px;
+        margin-bottom: 30px;
+    }
+    
+    .contact-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    .order-block {
+        max-width: 100%;
+    }
+    
+    /* Футер */
+    .footer-content {
+        padding: 30px;
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .footer-title {
+        margin-bottom: 20px;
+    }
+    
+    /* Модальное окно */
+    .modal-content {
+        max-width: 90%;
+        gap:10px;
+    }
+    
+    .modal-image {
+        max-height: 60vh;
+    }
+    
+    .modal-info {
+        padding: 10px 10px;
+        gap: 40px;
+        margin-top: -25px;
+        min-width: 100%;
+    }
+    
+    .modal-title {
+        font-size: 16px;
+        max-width: 250px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    .close-modal {
+        top: 15px;
+        right: 15px;
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+    
+    /* Социальные кнопки */
+    .social-button {
+        padding: 10px 20px;
+        font-size: 16px;
+    }
+    
+    .square-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+    }
+    
+    /* Кнопка "наверх" */
+    .scroll-top {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+        bottom: 20px;
+        right: 20px;
+    }
+}
+
+/* Дополнительные стили только для iPhone 13 (меньший экран) */
+@media only screen and (max-width: 375px) {
+    .hero-title {
+        font-size: 32px;
+    }
+    
+    .section-title {
+        font-size: 28px;
+    }
+    
+    .stat-number {
+        font-size: 42px;
+    }
+    
+    .review-card {
+        min-width: 260px;
+        /*padding: 25px;*/
+    }
+    
+    .contact-title {
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 360px) {
+    .hero-title {
+        font-size: 28px;
+    }
+    
+    .hero-btn {
+        padding: 12px 25px;
+        font-size: 16px;
+    }
+    
+    .section-title {
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 768px) {
+    .modal-content {
+        max-width: 95%;
+        gap: 10px;
+    }
+
+    #nbip, #nbin {
+        font-size: 18px;
+        margin: 0 5px;
+    }
+}
+@media (max-width: 768px) {
+    .hero {
+        min-height: 600px;
+        margin-top: 60px;
+    }
+    
+    .hero-title {
+        font-size: 32px;
+    }
+    
+    .hero-subtitle {
+        font-size: 16px;
+    }
+}
+@media (max-width: 768px) {
+    .portfolio-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 0;
+    }
+    
+    .portfolio-item {
+        aspect-ratio: 1/1.2;
+    }
+}
+@media (max-width: 768px) {
+    .review-card {
+        min-width: 85vw;
+        padding: 25px;
+    }
+}
+@media (max-width: 768px) {
+    .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .footer-links {
+        align-items: center;
+    }
+}
+@media (max-width: 390px) {
+    .mobile-nav-links a {
+        font-size: 20px;
+    }
+    
+    .close-mobile-menu {
+        top: 20px;
+        right: 20px;
+    }
+}
+.mobile-nav-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.mobile-nav.active .mobile-nav-particles {
+    opacity: 0.6;
+}
+
+.mobile-nav-particle {
+    position: absolute;
+    background: linear-gradient(to right, var(--purple-light), var(--gold-light));
+    border-radius: 50%;
+    animation: floatParticle linear infinite;
+    opacity: 0.6; /* Сразу видимые частицы */
+        animation-delay: 0s; /* Удалите или уменьшите задержку */
+    animation-duration: 10s; /* Уменьшите длительность */
+
+}
+
+@keyframes floatParticle {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: 0;
+    }
+}
+/* Добавьте эти стили для плавного появления */
+.mobile-nav {
+    /* ... существующие стили ... */
+    overflow: hidden;
+}
+
+.mobile-nav-links a {
+    /* ... существующие стили ... */
+    transition: 
+        transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+        opacity 0.5s ease,
+        color 0.3s ease,
+        background 0.3s ease;
+    transform: translateY(20px);
+}
+
+.mobile-nav.active .mobile-nav-links a {
+    transform: translateY(0);
+}
+
+/* Задержка для каждой ссылки */
+.mobile-nav-links a:nth-child(1) { transition-delay: 0.1s; }
+.mobile-nav-links a:nth-child(2) { transition-delay: 0.2s; }
+.mobile-nav-links a:nth-child(3) { transition-delay: 0.3s; }
+.mobile-nav-links a:nth-child(4) { transition-delay: 0.4s; }
+@media (hover: none) and (pointer: coarse) {
+    /* Отключаем hover-эффекты для всех элементов */
+ 
+    /* Специфичные элементы, где нужно сохранить анимации при клике */
+    .portfolio-item {
+        transform: translateY(0) !important;
+    }
+    
+    .portfolio-item:active {
+        transform: translateY(-5px) scale(1.02) !important;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.3) !important;
+    }
+    
+    .social-button:active {
+        transform: translateY(-3px) scale(1.05) !important;
+        box-shadow: 0 5px 15px rgba(106, 48, 147, 0.3) !important;
+    }
+    
+
+    /* Сохраняем важные состояния для интерактивных элементов */
+    .social-button:active .square-icon {
+        transform: rotate(5deg) scale(1.05) !important;
+    }
+
+}
+/* Добавьте в CSS */
+.mobile-nav-particles {
+    transition: opacity 0.2s ease-out !important; /* Быстрое появление */
+}
+
+@keyframes floatParticle {
+    0% {
+        opacity: 0.6; /* Сразу видимые */
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-1000px);
+    }
+}
+
+/* Стили для ноутбуков (1024px - 1440px) */
+@media (min-width: 1024px) and (max-width: 1440px) {
+    .modal-content {
+        gap: 1px; /* Увеличиваем отступ для ноутбуков */
+        top: -30px;
+                   justify-content: center; /* Горизонтальное центрирование */
+
+           align-items: center;     /* Вертикальное центрирование */
+
+    }
+    
+    .modal-image {
+        max-height: 100vh; /* Чуть меньше максимальной высоты */
+        /*margin-bottom: 20px;  Дополнительный отступ снизу */
+    }
+    
+    .modal-info {
+        padding: 25px 40px; /* Больше отступы вокруг текста */
+    }
+}
+
+/* Оптимизация для больших экранов ноутбуков */
+@media (min-width: 1440px) {
+    .modal-content {
+       top: -30px;
+           justify-content: center; /* Горизонтальное центрирование */
+
+           align-items: center;     /* Вертикальное центрирование */
+    }
+    
+    .modal-image {
+        max-height: 100vh;
+    }
+}
+
+/* Сохраняем адаптацию для мобильных */
+@media (max-width: 768px) {
+    .modal-content {
+        gap: 20px; /* Меньший отступ на мобильных */
+    }
+}
+.modal-info-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+}
+
+.modal-info {
+    background: rgba(30, 30, 30, 0.8);
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    max-width: 80%;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.3s ease 0.1s;
+}
+
+
+    .image-container {
+        cursor: pointer;
+    }
+    
+    #fullscreen-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.3s ease, background-color 0.3s ease;
+
+    }
+    
+        #fullscreen-overlay.active {
+        display: flex;
+        opacity: 1;
+        background-color: rgba(0, 0, 0, 0.9);
+    }
+    
+    #fullscreen-overlay img {
+        max-width: 90%;
+        max-height: 90%;
+        object-fit: contain;
+        transform: scale(0.8);
+        transition: transform 0.3s ease;
+    }
+    #fullscreen-overlay.active img {
+        transform: scale(1);
+    }
+    .close-fullscreen {
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, var(--purple), var(--gold));
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+        transition: var(--transition);
+        z-index: 2;
+        border: none;
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    
+    #fullscreen-overlay.active .close-fullscreen {
+        opacity: 1;
+        transform: scale(1);
+        transition-delay: 0.2s;
+    }
+    
+    .close-fullscreen:hover {
+        transform: rotate(90deg) scale(1.1);
+    }
+
+
+
+@keyframes text-appear {
+    from {
+        opacity:0;
+        transform: translateY(100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+.hidden-work {
+    display: none;
+}
+.portfolio-item.hidden-work {
+    /*overflow: hidden;*/
+    transform-style: preserve-3d;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+    z-index: 3;
+    /*transform: translateZ(1px);*/
+
+}
+    .recent-works-section {
+        padding: 80px 0;
+        background: linear-gradient(135deg, rgba(10,10,10,0.95), rgba(20,10,40,0.9));
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .recent-works-gallery {
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+        padding: 20px 0;
+    }
+    
+    .recent-works-track {
+        display: flex;
+        gap: 30px;
+        width: max-content;
+        animation: scroll 40s linear infinite;
+        position: relative;
+        z-index: 1;
+        padding: 0 100px; /* Добавляем отступы для плавного входа/выхода */
+    }
+    
+    @keyframes scroll {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(-50%);
+        }
+    }
+    
+    .recent-work-item {
+        width: 400px;
+        height: 300px;
+        border-radius: 16px;
+        overflow: hidden;
+        flex-shrink: 0;
+        position: relative;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        transition: var(--transition);
+    }
+    
+    .recent-work-item:hover {
+        transform: translateY(-10px) scale(1.05);
+        box-shadow: 0 10px 20px rgba(106, 48, 147, 0.5);
+    }
+    
+    .recent-work-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+    
+    .recent-work-item:hover img {
+        transform: scale(1.1);
+    }
+    
+    /* Усиленное размытие по бокам */
+    .gallery-fade-left,
+    .gallery-fade-right {
+        position: absolute;
+        top: -20px; /* Расширяем область размытия сверху */
+        bottom: -20px; /* Расширяем область размытия снизу */
+        width: 250px; /* Увеличиваем ширину размытия */
+        z-index: 3;
+        pointer-events: none;
+    }
+    
+    .gallery-fade-left {
+                left: -20px; /* Расширяем за пределы видимой области */
+        background: 
+            linear-gradient(90deg, 
+                rgba(10,10,10,0.95) 0%,
+                rgba(10,10,10,0.95) 10%,
+                rgba(10,10,10,0.8) 30%,
+                rgba(10,10,10,0.5) 60%,
+                rgba(10,10,10,0.2) 80%,
+                rgba(10,10,10,0) 100%);
+        mask-image: 
+            linear-gradient(to right, 
+                black 0%,
+                transparent 100%);
+        -webkit-mask-image: 
+            linear-gradient(to right, 
+                black 0%,
+                transparent 100%);
+        backdrop-filter: blur(15px) brightness(0.9);
+        -webkit-backdrop-filter: blur(15px) brightness(0.9);
+
+    }
+    
+    .gallery-fade-right {
+        right: -20px; /* Расширяем за пределы видимой области */
+        background: 
+            linear-gradient(270deg, 
+                rgba(20,10,40,0.9) 0%,
+                rgba(20,10,40,0.9) 10%,
+                rgba(20,10,40,0.7) 30%,
+                rgba(20,10,40,0.4) 60%,
+                rgba(20,10,40,0.2) 80%,
+                rgba(20,10,40,0) 100%);
+        mask-image: 
+            linear-gradient(to left, 
+                black 0%,
+                transparent 100%);
+        -webkit-mask-image: 
+            linear-gradient(to left, 
+                black 0%,
+                transparent 100%);
+        backdrop-filter: blur(15px) brightness(0.9);
+        -webkit-backdrop-filter: blur(15px) brightness(0.9);
+
+    }
+    
+        /* Анимация для плавного появления размытия */
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    
+    .gallery-fade-left,
+    .gallery-fade-right {
+        animation: fadeIn 1.5s ease-out forwards;
+    }
+
+
+    @media (max-width: 768px) {
+        .recent-work-item {
+            width: 350px;
+            height: 260px;
+        }
+        
+        .recent-works-track {
+            gap: 20px;
+            animation: scroll 30s linear infinite;
+            padding: 0 60px;
+        }
+        
+        .gallery-fade-left,
+        .gallery-fade-right {
+            width: 150px;
+            backdrop-filter: blur(12px) brightness(0.9);
+            -webkit-backdrop-filter: blur(12px) brightness(0.9);
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .recent-work-item {
+            width: 200px;
+            height: 160px;
+        }
+        
+        .gallery-fade-left,
+        .gallery-fade-right {
+            width: 100px;
+            backdrop-filter: blur(8px) brightness(0.9);
+            -webkit-backdrop-filter: blur(8px) brightness(0.9);
+        }
+    }
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+.audio-icon {
+  font-size: 2rem;
+  color: #fff;
+}
+
+#play-pause-button {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 3%;
+  bottom: 5%;
+  background-color: transparent;
+  background-image: radial-gradient(
+    50% 115% at 50% -5%,
+    rgba(255, 255, 255, 0.11) 0%,
+    transparent 100%
+  );
+  box-shadow: inset 0 0px 10px 0px rgba(255, 255, 255, 0.14),
+    inset 0px 5px 10px 0px rgba(255, 255, 255, 0.11),
+    inset 0px 2px 5px 0px rgba(255, 255, 255, 0.4),
+    inset 0px 3px 20px 0px rgba(0, 0, 0, 0.25);
+  z-index: 10;
+  border: 0;
+  border-radius: 50%;
+  outline: 0;
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+#play-pause-button:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+#play-pause-button:active {
+  transform: scale(0.95);
+}
+
+.hidden {
+  display: none;
+}
+.music-player {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(135deg, rgba(10,10,10,0.95), rgba(20,10,40,0.9));
+  padding: 15px 20px;
+  box-shadow: 0 -5px 20px rgba(0,0,0,0.3);
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(106, 48, 147, 0.3);
+}
+
+.player-controls {
+  display: flex;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 20px;
+}
+
+.control-btn {
+  background: linear-gradient(to right, var(--purple), var(--gold));
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.control-btn:hover {
+  transform: scale(1.1);
+}
+
+.track-info {
+  flex-grow: 1;
+  color: var(--text-light);
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.progress-container {
+  flex-grow: 2;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.progress-bar {
+  flex-grow: 1;
+  height: 5px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 5px;
+  cursor: pointer;
+  position: relative;
+}
+
+.progress-bar::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: var(--progress, 0%);
+  background: linear-gradient(to right, var(--purple), var(--gold));
+  border-radius: 5px;
+  transition: width 0.1s linear;
+}
+
+.time {
+  color: var(--text-gray);
+  font-size: 12px;
+  min-width: 40px;
+}
+
+.volume-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 120px;
+}
+
+.volume-icon {
+  color: var(--text-light);
+  font-size: 16px;
+}
+
+#volume-slider {
+  width: 100%;
+  height: 5px;
+  -webkit-appearance: none;
+  background: rgba(255,255,255,0.2);
+  border-radius: 5px;
+  outline: none;
+}
+
+#volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  background: var(--gold);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
+
+/* Мобильные стрелки навигации */
+.mobile-nav-btn {
+    display: none; /* По умолчанию скрыты */
+    background: linear-gradient(135deg, var(--purple), var(--gold));
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    transition: var(--transition);
+    flex-shrink: 0;
+}
+
+.mobile-nav-btn:hover {
+    transform: scale(1.1);
+}
+
+.modal-text {
+    flex-grow: 1;
+    padding: 0 15px;
+}
+
+/* Показываем мобильные стрелки только на маленьких экранах */
+@media (max-width: 768px) {
+    .mobile-nav-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .modal-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    /* Скрываем обычные стрелки на мобильных */
+    .nav-btn {
+        display: none;
+    }
+}
+
+
+.music-control {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 9999;
+    background: rgba(20, 20, 20, 0.8);
+    padding: 10px 15px;
+    border-radius: 30px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(106, 48, 147, 0.3);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    transform: translateY(20px);
+    opacity: 0;
+    animation: fadeInUp 0.5s ease-out 2s forwards;
+}
+.music-control:hover {
+    background: rgba(30, 30, 30, 0.9);
+    box-shadow: 0 8px 25px rgba(106, 48, 147, 0.4);
+    transform: translateY(0) scale(1.05);
+}
+
+.music-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--purple), var(--gold));
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.music-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 15px rgba(106, 48, 147, 0.5);
+}
+
+.music-label {
+    color: var(--text-light);
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.music-btn:active {
+    transform: scale(0.95);
+}
+.music-label {
+    color: var(--text-light);
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+}
+
+.music-control:hover .music-label {
+    color: var(--gold-light);
+}
+
+#volumeSlider {
+    width: 100px;
+    height: 5px;
+    -webkit-appearance: none;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.2s;
+
+}
+
+#volumeSlider:hover {
+    height: 8px;
+}
+
+#volumeSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 15px;
+    height: 15px;
+    background: var(--gold);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+#volumeSlider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    background: var(--gold-light);
+}
+/* Анимация пульсации при изменении громкости */
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(255, 215, 0, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
+}
+
+.volume-pulse {
+    animation: pulse 0.5s ease-out;
+}
+
+/* Анимация появления */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .music-control {
+        bottom: 15px;
+        left: 15px;
+        padding: 8px 12px;
+        animation-delay: 1s; /* Более быстрое появление на мобильных */
+    }
+    
+    .music-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 14px;
+    }
+    
+    .music-label {
+        font-size: 12px;
+        display: none;
+    }
+    
+    #volumeSlider {
+        width: 80px;
+    }
+}
+/* Geometric Pattern Styles */
+.geometric-pattern {
+    position: fixed;
+    left: 300px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 300px;
+    height: 300px;
+    z-index: 999;
+    pointer-events: none;
+    /*opacity: 0.7;*/
+    transition: all 0.5s ease-out;
+    mix-blend-mode: overlay;
+        overflow: visible; /* ✨ разрешает выходить за границы */
+
+}
+
+.geometric-pattern svg {
+    width: 100%;
+    height: 100%;
+        overflow: visible; /* ✨ вдруг нужно для SVG */
+
+}
+
+.geometric-shape {
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Hide under portfolio section */
+.portfolio-section {
+    position: relative;
+    z-index: 1000;
+}
+
+@media (max-width: 1024px) {
+    .geometric-pattern {
+        left: -80px;
+        width: 250px;
+        height: 250px;
+        opacity: 0.2;
+    }
+}
+
+@media (max-width: 768px) {
+    .geometric-pattern {
+        display: none;
+    }
+}
+</style>
+
+
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <nav>
+                <div class="logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                    <div class="logo-icon">
+                        <i class="fas fa-crown" style="color: white; font-size: 16px;"></i>
+                    </div>
+                    <div class="logo-text">MDC Design</div>
+                </div>
+                <div class="nav-links">
+                    <a href="#portfolio">Портфоліо</a>
+                    <a href="#stats">Статистика</a>
+                    <a href="#reviews">Відгуки</a>
+                    <a href="#contact">Контакти</a>
+                </div>
+
+                <div class="burger-menu" id="burgerMenu">
+                <span class="burger-line"></span>
+                <span class="burger-line"></span>
+                <span class="burger-line"></span>
+            </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="particles" id="particles"></div>
+         <!--    <img src="https://i.ibb.co/3y8s20RQ/fon.jpg" alt="Фоновое изображение" class="hero-bg"> -->
+
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Дизайн для вашого ігрового проекту</h1>
+                <p class="hero-subtitle">Я спеціалізуюся на створенні дизайну для ігор, таких як Counter Strike 1.6, Counter Strike 2, Lineage 2, але також працюю і в інших напрямках дизайну. 
+                Крім того, я можу надати послуги з оформлення сайтів, включаючи опис ігор та продуктів.</p>
+                <a href="https://t.me/mdc_design" class="hero-btn">Замовити дизайн</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+<section class="portfolio-section" id="portfolio">
+
+    <div class="container">
+
+    <h2 class="section-title">Мої роботи</h2>
+    
+        <div class="portfolio-grid" id="portfolioGrid">
+            
+            <div class="portfolio-item">
+                    <img src="work1.png">
+                <div class="portfolio-overlay">
+                        <h2 class="portfolio-title">Виконана робота № 1</h2>
+                        <p class="portfolio-category">🟣 Работа для проекта RODNOYPUBLIC</p>
+						<p class="portfolio-category">🟣 Главные баннер</p>
+						<p class="portfolio-category">🟣 Иконки</p>
+						<p class="portfolio-category">🟣 Аватарка для телеграмма</p>
+						<p class="portfolio-category">🟣 Логотип</p>
+						<p class="portfolio-category">🟣 Мотд окно</p>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                    <img src="work2.jpg">
+                <div class="portfolio-overlay">
+                        <h2 class="portfolio-title">Виконана робота № 2</h2>
+                        <p class="portfolio-category">Дизайн</p>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                    <img src="work3.jpg">
+                <div class="portfolio-overlay">
+                        <h2 class="portfolio-title">Виконана робота № 3</h2>
+                        <p class="portfolio-category">Дизайн</p>
+                </div>
+            </div>
+            <div class="portfolio-item hidden-work">
+                    <img src="work4.jpg">
+                <div class="portfolio-overlay">
+                        <h2 class="portfolio-title">Виконана робота № 4</h2>
+                        <p class="portfolio-category">Дизайн</p>
+                </div>
+            </div>
+            <div class="portfolio-item hidden-work">
+                    <img src="work5.jpg">
+                <div class="portfolio-overlay">
+                        <h2 class="portfolio-title">Виконана робота № 5</h2>
+                        <p class="portfolio-category">Дизайн</p>
+                </div>
+            </div>
+            <div class="portfolio-item hidden-work">
+                    <img src="work6.jpg">
+                <div class="portfolio-overlay">
+                        <h2 class="portfolio-title">Виконана робота № 6</h2>
+                        <p class="portfolio-category">Дизайн</p>
+                </div>
+            </div>
+            <div class="portfolio-item hidden-work">
+                    <img src="work7.jpg">
+                <div class="portfolio-overlay">
+                        <h2 class="portfolio-title">Виконана робота № 7</h2>
+                        <p class="portfolio-category">Дизайн</p>
+                </div>
+            </div>
+            <div class="portfolio-item hidden-work">
+                    <img src="work8.jpg">
+                <div class="portfolio-overlay">
+                        <h2 class="portfolio-title">Виконана робота № 8</h2>
+                        <p class="portfolio-category">Дизайн</p>
+                </div>
+            </div>
+            <div class="portfolio-item hidden-work">
+                    <img src="work9.jpg">
+                <div class="portfolio-overlay">
+                        <h2 class="portfolio-title">Виконана робота № 9</h2>
+                        <p class="portfolio-category">Дизайн</p>
+                </div>
+            </div>
+            <div class="portfolio-item hidden-work">
+                    <img src="work10.jpg">
+                <div class="portfolio-overlay">
+                        <h2 class="portfolio-title">Виконана робота № 10</h2>
+                        <p class="portfolio-category">Дизайн</p>
+                </div>
+            </div>
+            <div class="portfolio-item hidden-work">
+                    <img src="work11.jpg">
+                <div class="portfolio-overlay">
+                        <h2 class="portfolio-title">Виконана робота № 11</h2>
+                        <p class="portfolio-category">Дизайн</p>
+                </div>
+            </div>
+            <div class="portfolio-item hidden-work">
+                    <img src="work12.png">
+                <div class="portfolio-overlay">
+                        <h2 class="portfolio-title">Виконана робота № 12</h2>
+                        <p class="portfolio-category">Дизайн</p>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="portfolio-actions" style="text-align: center; margin-top: 20px;">
+    <button class="showMoreBtn expand-btn" id="showMoreBtn"><i class="fas fa-chevron-down"></i></button>
+</div>
+
+
+</section>
+
+
+ <!-- Stats Section -->
+    <section class="stats-section" id="stats">
+        <div class="container">
+            <div class="stats-container" id="statsContainer">
+                <div class="stat-item">
+                    <div class="stat-number" id="projectsCount">0</div>
+                    <div class="stat-label">Завершених проектів</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="clientsCount">0</div>
+                    <div class="stat-label">Задоволених клієнтів</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="experienceCount">0</div>
+                    <div class="stat-label">Року досвіду</div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <!-- Reviews Section -->
+    <section class="reviews-section" id="reviews">
+        <div class="container">
+            <h2 class="section-title">Що кажуть клієнти</h2>
+            <div class="reviews-container">
+                <div class="review-card">
+                    <p class="review-text">"Робота виконана на найвищому рівні! Авторка виявила себе як справжній професіонал, приділила увагу кожній деталі та запропонувала креативні рішення, які перевершили всі мої очікування."</p>
+                    <div class="review-author">
+                        <img src="https://cs-vip.com/files/avatars/1732167092.jpg" alt="Almazov" class="author-avatar">
+                        <div class="author-info">
+                            <span class="author-name">Almazov</span>
+                            <span class="author-position">CS-VIP</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <p class="review-text">"Висловлюємо величезну подяку за виконану роботу. Її робота відбулася усі наші очікування, виконана швидко та якісно за день. Надалі плануємо продовжувати співпрацю, дякую за чудову роботу."</p>
+                    <div class="review-author">
+                        <img src="https://rodnoypublic.website/files/avatars/no_avatar.jpg" alt="ROCK" class="author-avatar">
+                        <div class="author-info">
+                            <span class="author-name">ROCK</span>
+                            <span class="author-position">RODNOYPUBLIC</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <p class="review-text">"Висловлюю велику подяку цьому - дизайнеру. Приємна у спілкуванні. Зробила банери для сайту, швидко та якісно. Порівняно з іншими дизайнерами, у яких замовляв - набагато красивіше все зробила."</p>
+                    <div class="review-author">
+                        <img src="https://ygordona.com/files/avatars/no_avatar.jpg" alt="3tt" class="author-avatar">
+                        <div class="author-info">
+                            <span class="author-name">3tt</span>
+                            <span class="author-position">YGORDONA</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <p class="review-text">"Хочу висловити величезну подяку за її приголомшливу роботу! Вона уважно слухала всі мої побажання та змогла втілити їх у життя, створивши дизайн, який перевершив усі мої очікування."</p>
+                    <div class="review-author">
+                        <img src="https://donbas-cs.com.ua/files/miniatures/standart.jpg?v=3750" alt="Ivanovich" class="author-avatar">
+                        <div class="author-info">
+                            <span class="author-name">Ivanovich</span>
+                            <span class="author-position">DONBASS-CS</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <p class="review-text">"Дуже приємна у спілкуванні, допомогла, підказала що і де і як. Раджу - бачив її просто чудово все. Також вносила безкоштовну зміну в дизайні, якщо це потрібно. Раджу цю дівчинку!"</p>
+                    <div class="review-author">
+                        <img src="https://narodcs.fun/files/avatars/57.gif?v=208" alt="Apxutektop" class="author-avatar">
+                        <div class="author-info">
+                            <span class="author-name">Apxutektop</span>
+                            <span class="author-position">NARODCS</span>
+                </div>          
+            </div>
+        </div>
+    </section>
+
+<section class="common-bg-section">
+
+<!-- Contact Section -->
+<section class="contact-section" id="contact">
+    <div class="container">
+        <div class="contact-container">
+            <!-- Левая часть - Контактная информация -->
+            <div class="contact-info">
+                <h2 class="contact-title">Готові замовити дизайн?</h2>
+                <p class="contact-text">Зв'яжіться зі мною, щоб обговорити ваші ідеї та отримати індивідуальну пропозицію щодо дизайну.</p>
+                
+                <div class="contact-details">
+                    <div class="social-section">
+                        <h3 class="social-title">Зв'язатися зі мной:</h3>
+                        <div class="social-buttons">
+                            <a href="https://t.me/mdc_design" class="social-button" target="_blank">
+                                <div class="square-icon">
+                                    <i class="fab fa-telegram"></i>
+                                </div>
+                                <span>Telegram</span>
+                                <div class="arrow-icon">
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </a>
+                            <a href="https://www.weblancer.net/users/falso_besenok/" class="social-button" target="_blank">
+                                <div class="square-icon">
+                                    <i class="fa fa-handshake"></i>
+                                </div>
+                                <span>Weblancer</span>
+                                <div class="arrow-icon">
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Правая часть - Видео презентация -->
+<!-- В секции contact-section замените правую часть на этот код -->
+<div class="video-presentation">
+    <div class="order-block">
+        <div class="header-text">ОСТАННЄ ЗАМОВЛЕННЯ</div>
+        <div class="image-container" onclick="openFullscreen(this)">
+            <img src="work-preview.jpg" alt="Останнє замовлення">
+        </div>
+        <div class="user-info">
+            <img src="https://cs-vip.com/files/avatars/1732167092.jpg" alt="Avatar" class="avatar">
+            <div>
+                <div class="username">Almazov</div>
+                <div class="rank">CS-VIP</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Fullscreen overlay -->
+<div id="fullscreen-overlay" onclick="closeFullscreen(event)">
+    <button class="close-fullscreen" onclick="closeFullscreen(event)">
+        <i class="fas fa-times"></i>
+    </button>
+    <img id="fullscreen-image" src="">
+</div>
+
+</section>
+
+<!-- Recent Works Gallery Section -->
+<section class="recent-works-section">
+    <div class="container">
+        <h2 class="section-title">Останні роботи</h2>
+        <div class="recent-works-gallery">
+            <!-- Левое размытие -->
+            <div class="gallery-fade-left"></div>
+            <!-- Правое размытие -->
+            <div class="gallery-fade-right"></div>
+            
+            <div class="recent-works-track">
+                <!-- Первый набор изображений -->
+                <div class="recent-work-item">
+                    <img src="work1.png" alt="Робота 1">
+                </div>
+                <div class="recent-work-item">
+                    <img src="work2.jpg" alt="Робота 2">
+                </div>
+                <div class="recent-work-item">
+                    <img src="work3.jpg" alt="Робота 3">
+                </div>
+                <div class="recent-work-item">
+                    <img src="work4.jpg" alt="Робота 4">
+                </div>
+                <div class="recent-work-item">
+                    <img src="work5.jpg" alt="Робота 5">
+                </div>
+                <div class="recent-work-item">
+                    <img src="work6.jpg" alt="Робота 6">
+                </div>
+                
+                <!-- Дубликат для бесконечной анимации -->
+                <div class="recent-work-item">
+                    <img src="work1.png" alt="Робота 1">
+                </div>
+                <div class="recent-work-item">
+                    <img src="work2.jpg" alt="Робота 2">
+                </div>
+                <div class="recent-work-item">
+                    <img src="work3.jpg" alt="Робота 3">
+                </div>
+                <div class="recent-work-item">
+                    <img src="work4.jpg" alt="Робота 4">
+                </div>
+                <div class="recent-work-item">
+                    <img src="work5.jpg" alt="Робота 5">
+                </div>
+                <div class="recent-work-item">
+                    <img src="work6.jpg" alt="Робота 6">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--  <section class="darrek">
+<div class="music-player">
+  <div class="player-controls">
+    <button id="play-pause-btn" class="control-btn">
+      <i class="fas fa-play" id="play-icon"></i>
+      <i class="fas fa-pause hidden" id="pause-icon"></i>
+    </button>
+    <div class="track-info">
+      <span id="current-song">Azizi Gibson - Barbie</span>
+    </div>
+    <div class="progress-container">
+      <div class="progress-bar" id="progress-bar"></div>
+      <span class="time" id="current-time">0:00</span>
+      <span class="time" id="duration">0:00</span>
+    </div>
+    <div class="volume-control">
+      <i class="fas fa-volume-up volume-icon"></i>
+      <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.7">
+    </div>
+  </div>
+  <audio id="audio-player" src="AziziGibson.mp3"></audio>
+</div>
+
+   
+
+  </section>
+ -->        
+
+ <!-- Glowing Border Footer -->
+        <footer class="glowing-footer">
+            <div class="footer-container">
+                <div class="footer-border-wrap">
+                    <div class="footer-content">
+                        <!-- Левая колонка -->
+                        <div class="footer-brand">
+                            <div class="logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                            <div class="logo-icon">
+                                <i class="fas fa-crown" style="color: white; font-size: 16px;"></i>
+                            </div>
+                            <div class="logo-text">MDC Design</div>
+                        </div>
+                            <div class="footer-copyright">© 2021 - 2025</div>
+                        </div>
+                        
+                        <!-- Центральная колонка -->
+                        <div class="footer-section">
+                            <h3 class="footer-title">Корисна Інформація</h3>
+                            <ul class="footer-links">
+                                <li><a href="https://t.me/mdc_design">Почати роботу</a></li>
+                                <li><a href="#portfolio">Портфоліо</a></li>
+                                <li><a href="#reviews">Відгуки</a></li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Правая колонка -->
+                        <div class="footer-section">
+                            <h3 class="footer-title">Для Користувачів</h3>
+                            <ul class="footer-links">
+                                <li><a href="#">Політика конфіденційності</a></li>
+                                <li><a href="#stats">Статистика</a></li>
+                                <li><a href="#contact">Контакти</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+</section>
+<!-- Portfolio Modal -->
+        <div class="portfolio-modal" id="portfolioModal">
+            <button class="close-modal" id="closeModal">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="navigation-buttons">
+                <button class="nav-btn prev" id="prevBtn">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="nav-btn next" id="nextBtn">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            
+                <div class="modal-content">
+                    <img src="" alt="" class="modal-image" id="modalImage">
+                    <div class="modal-info-wrapper">
+                        <div class="modal-info" id="modalInfo">
+                            <button class="mobile-nav-btn prev" id="mobilePrevBtn">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <div class="modal-text">
+                                <h3 class="modal-title" id="modalTitle"></h3>
+                                <p class="modal-description" id="modalDescription"></p>
+                            </div>
+                            <button class="mobile-nav-btn next" id="mobileNextBtn">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+    </div>
+
+        </div>
+    <!-- Scroll to top button -->
+    <div class="scroll-top" id="scrollTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+<!-- Мобильное меню -->
+<div class="mobile-nav" id="mobileNav">
+        <div class="mobile-nav-particles" id="mobileNavParticles"></div>
+    
+    <div class="close-mobile-menu" id="closeMobileMenu">
+        <i class="fas fa-times"></i>
+    </div>
+    
+    <div class="mobile-nav-links">
+        <a href="#portfolio" onclick="closeMobileMenu()">Портфоліо</a>
+        <a href="#stats" onclick="closeMobileMenu()">Статистика</a>
+        <a href="#reviews" onclick="closeMobileMenu()">Відгуки</a>
+        <a href="#contact" onclick="closeMobileMenu()">Контакти</a>
+    </div>
+<!-- 
+    <div class="close-mobile-menu" id="closeMobileMenu">
+        <i class="fas fa-times"></i>
+    </div>
+    
+    <div class="mobile-nav-links">
+        <a href="#portfolio" onclick="closeMobileMenu()">Портфоліо</a>
+        <a href="#stats" onclick="closeMobileMenu()">Статистика</a>
+        <a href="#reviews" onclick="closeMobileMenu()">Відгуки</a>
+        <a href="#contact" onclick="closeMobileMenu()">Контакти</a>
+    </div> -->
+</div>
+
+<!-- Добавьте этот код перед закрывающим тегом </body> -->
+<div class="music-control" id="musicControl">
+    <button class="music-btn" id="musicBtn">
+        <i class="fas fa-volume-up" id="musicIcon"></i>
+    </button>
+    <span class="music-label">Музика</span>
+    <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="0.5">
+    <audio id="backgroundMusic" loop autoplay>
+        <source src="AziziGibson.mp3" type="audio/mpeg">
+    </audio>
+</div>
+<!-- Добавьте этот код перед закрывающим тегом </body> -->
+<div class="geometric-pattern" id="geometricPattern">
+  <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+    <!-- Треугольник слева -->
+    <path class="geometric-shape shape-1"
+          fill="var(--purple-light)"
+          opacity="0.6"
+          d="M50,150 L150,350 L-50,350 Z" />
+    
+    <!-- Квадрат по центру -->
+    <rect class="geometric-shape shape-2"
+          x="150"
+          y="150"
+          width="100"
+          height="100"
+          fill="var(--gold)"
+          opacity="0.7" />
+    
+    <!-- Круг справа -->
+    <circle class="geometric-shape shape-3"
+            cx="300"
+            cy="200"
+            r="50"
+            fill="var(--purple-light)"
+            opacity="0.8" />
+  </svg>
+</div>
+
+
+    <script>
+
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.portfolio-item .arrow').forEach(arrow => {
+      arrow.addEventListener('click', function() {
+        const details = this.closest('.portfolio-item').querySelector('.details');
+        details.style.right = details.style.right === '0px' ? '-100%' : '0px';
+      });
+    });
+const animateOnScroll = (elements, animationClass) => {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add(animationClass);
+            }
+        });
+    }, { 
+        threshold: 0.5,
+        rootMargin: '0px 0px -100px 0px'
+    });
+
+    elements.forEach(element => {
+        observer.observe(element);
+    });
+};
+
+// Использование:
+const portfolioItems = document.querySelectorAll('.portfolio-item');
+animateOnScroll(portfolioItems, 'animate');
+
+  });
+
+
+    function openFullscreen(element) {
+        const overlay = document.getElementById('fullscreen-overlay');
+        const fullscreenImg = document.getElementById('fullscreen-image');
+        
+        // Get the image source from the clicked container
+        const imgSrc = element.querySelector('img').src;
+        fullscreenImg.src = imgSrc;
+        
+        // Display the overlay with animation
+        overlay.style.display = 'flex';
+        setTimeout(() => {
+            overlay.classList.add('active');
+        }, 10);
+        
+        // Prevent body scrolling when overlay is open
+        document.body.style.overflow = 'hidden';
+    }
+    
+    function closeFullscreen(event) {
+        // Prevent event bubbling to overlay
+        if (event) {
+            event.stopPropagation();
+        }
+        
+        const overlay = document.getElementById('fullscreen-overlay');
+        overlay.classList.remove('active');
+        
+        // Wait for animation to finish before hiding
+        setTimeout(() => {
+            overlay.style.display = 'none';
+            // Restore body scrolling
+            document.body.style.overflow = 'auto';
+        }, 300);
+    }
+    
+    // Close when pressing ESC key
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            closeFullscreen();
+        }
+    });
+
+        // Header scroll effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll to top button
+        const scrollTopBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                scrollTopBtn.classList.add('active');
+            } else {
+                scrollTopBtn.classList.remove('active');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Create particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random size between 5px and 15px
+                const size = Math.random() * 10 + 5;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Random position
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100 + 100}%`;
+                
+                // Random animation duration between 10s and 20s
+                const duration = Math.random() * 10 + 10;
+                particle.style.animationDuration = `${duration}s`;
+                
+                // Random delay
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Animate stats counting with flip effect
+        function animateValue(id, start, end, duration) {
+            const element = document.getElementById(id);
+            const numberElement = element.querySelector('.number');
+            let current = start;
+            const increment = end > start ? 1 : -1;
+            const stepTime = Math.abs(Math.floor(duration / (end - start)));
+            const numbers = [];
+            
+            // Create all number elements
+            for (let i = start; increment === 1 ? i <= end : i >= end; i += increment) {
+                numbers.push(i);
+            }
+            
+            // Initial setup
+            numberElement.textContent = current;
+            
+            // Animation
+            let index = 0;
+            const timer = setInterval(() => {
+                if (index >= numbers.length - 1) {
+                    clearInterval(timer);
+                } else {
+                    index++;
+                    numberElement.style.transform = 'translateY(-100%)';
+                    numberElement.style.opacity = '0';
+                    
+                    setTimeout(() => {
+                        numberElement.textContent = numbers[index];
+                        numberElement.style.transform = 'translateY(0)';
+                        numberElement.style.opacity = '1';
+                    }, 200);
+                }
+            }, stepTime);
+        }
+
+ // Функция для анимации счетчика
+        function animateCounter(elementId, finalNumber, duration = 2000) {
+            const element = document.getElementById(elementId);
+            let startTimestamp = null;
+            const startNumber = 0;
+            
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const currentNumber = Math.floor(progress * finalNumber);
+                element.textContent = currentNumber;
+                
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                } else {
+                    element.textContent = finalNumber;
+                }
+            };
+            
+            window.requestAnimationFrame(step);
+        }
+
+        // Обновленный Intersection Observer для статистики
+        const animateOnScroll = (elements, animationClass) => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add(animationClass);
+                        
+                        // Start stats counting when stats section is visible
+                        if (entry.target.id === 'statsContainer') {
+                            animateCounter('projectsCount', 37);
+                            animateCounter('clientsCount', 69);
+                            animateCounter('experienceCount', 2);
+                        }
+                    }
+                });
+            }, { threshold: 0.5,
+                    rootMargin: '0px 0px -100px 0px' // Добавлено для лучшего определения видимости
+ }); // Изменили threshold для более точного срабатывания
+
+            elements.forEach(element => {
+                observer.observe(element);
+            });
+        };
+
+             // Инициализация анимаций при загрузке страницы
+        document.addEventListener('DOMContentLoaded', () => {
+            // Наблюдатель для секции статистики
+                const videoPresentation = document.querySelector('.video-presentation');
+    if (videoPresentation) {
+        animateOnScroll([videoPresentation], 'animate');
+    }
+
+            const statsObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Запускаем анимации счетчиков
+                        animateCounter('projectsCount', 54);
+                        animateCounter('clientsCount', 69);
+                        animateCounter('experienceCount', 2);
+                        // Отключаем наблюдатель после срабатывания
+                        statsObserver.disconnect();
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            // Начинаем наблюдать за секцией статистики
+            const statsSection = document.getElementById('statsContainer');
+            if (statsSection) {
+                statsObserver.observe(statsSection);
+            }
+            
+            createParticles();
+            
+            // Portfolio items animation
+            const portfolioItems = document.querySelectorAll('.portfolio-item');
+            animateOnScroll(portfolioItems, 'animate');
+            
+            // Stats items animation
+            const statItems = document.querySelectorAll('.stat-item');
+            animateOnScroll(statItems, 'animate');
+            
+            // Review cards animation
+            const reviewCards = document.querySelectorAll('.review-card');
+            animateOnScroll(reviewCards, 'animate');
+            
+            // Contact section animation
+            const contactInfo = document.querySelector('.contact-info');
+            const contactForm = document.querySelector('.contact-form');
+            animateOnScroll([contactInfo, contactForm], 'animate');
+            
+            // Form submission
+            const form = document.querySelector('.contact-form');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                // Get form values
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const message = document.getElementById('message').value;
+                
+                // Here you would typically send the form data to a server
+                console.log('Form submitted:', { name, email, message });
+                
+                // Show success message
+                alert('Спасибо за ваше сообщение! Я свяжусь с вами в ближайшее время.');
+                
+                // Reset form
+                form.reset();
+            });
+                // Получаем новые кнопки
+                const nbipBtn = document.getElementById('nbip');
+                const nbinBtn = document.getElementById('nbin');
+
+                // Назначаем обработчики
+                nbipBtn.addEventListener('click', () => navigate(-1));
+                nbinBtn.addEventListener('click', () => navigate(1));
+
+                // Обновленная функция navigate
+                function navigate(direction) {
+                    currentIndex = (currentIndex + direction + portfolioItems.length) % portfolioItems.length;
+                    updateModal();
+                    
+                    // Добавляем анимацию для визуального отклика
+                    const btn = direction === -1 ? nbipBtn : nbinBtn;
+                    btn.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        btn.style.transform = 'scale(1)';
+                    }, 200);
+                    }
+
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+
+        // Floating animation for contact icons
+        const contactIcons = document.querySelectorAll('.contact-icon');
+        contactIcons.forEach(icon => {
+            setInterval(() => {
+                icon.style.transform = `translateY(${Math.sin(Date.now() / 1000) * 5}px)`;
+            }, 50);
+        });
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const geometricPattern = document.getElementById('geometricPattern');
+    const portfolioSection = document.querySelector('.portfolio-section');
+    
+    if (!geometricPattern) return;
+    
+    const shapes = Array.from(document.querySelectorAll('.geometric-shape'));
+    let lastScrollY = window.scrollY;
+    let portfolioSectionTop = portfolioSection ? portfolioSection.offsetTop : Infinity;
+    
+    function updateShapes() {
+        const scrollY = window.scrollY;
+        const scrollProgress = Math.min(scrollY / 1000, 1);
+        const hideProgress = Math.min(Math.max((scrollY - portfolioSectionTop + 400) / 400, 0), 1);
+        
+        // Triangle animation
+        shapes[0].style.transform = `
+            rotate(${scrollY * 0.15}deg)
+            scale(${1 - scrollProgress * 0.2})
+        `;
+        
+        // Square animation
+        shapes[1].style.transform = `
+            rotate(${-scrollY * 0.2}deg)
+            translate(${Math.sin(scrollY * 0.005) * 30}px, ${Math.cos(scrollY * 0.005) * 20}px)
+            scale(${1 + scrollProgress * 0.1})
+        `;
+        
+        // Circle animation
+        shapes[2].style.transform = `
+            scale(${1 - scrollProgress * 0.05})
+            translateY(${Math.sin(scrollY * 0.01) * 10}px)
+        `;
+        
+        // Hide under portfolio section
+        if (scrollY > portfolioSectionTop - 400) {
+            geometricPattern.style.opacity = 0.3 * (1 - hideProgress);
+            geometricPattern.style.transform = `
+                translateY(calc(-50% + ${hideProgress * 100}px))
+                translateX(${-50 + hideProgress * 50}px)
+            `;
+        } else {
+            geometricPattern.style.opacity = 0.3;
+            geometricPattern.style.transform = 'translateY(-50%)';
+        }
+        
+        lastScrollY = scrollY;
+        requestAnimationFrame(updateShapes);
+    }
+    
+    // Smooth mouse parallax
+    let mouseX = 0, mouseY = 0;
+    let targetX = 0, targetY = 0;
+    
+    document.addEventListener('mousemove', (e) => {
+        targetX = (e.clientX / window.innerWidth - 0.5) * 40;
+        targetY = (e.clientY / window.innerHeight - 0.5) * 40;
+    });
+    
+    function updateMouseParallax() {
+        mouseX += (targetX - mouseX) * 0.1;
+        mouseY += (targetY - mouseY) * 0.1;
+        
+        geometricPattern.style.transform += `
+            translate(${mouseX}px, ${mouseY}px)
+        `;
+        
+        requestAnimationFrame(updateMouseParallax);
+    }
+    
+    updateShapes();
+    updateMouseParallax();
+});
+
+        // Portfolio Modal Functionality
+const portfolioModal = document.getElementById('portfolioModal');
+const modalImage = document.getElementById('modalImage');
+const modalTitle = document.getElementById('modalTitle');
+const modalDescription = document.getElementById('modalDescription');
+const closeModal = document.getElementById('closeModal');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+
+let currentIndex = 0;
+let portfolioItems = [];
+
+// Initialize portfolio items
+function initPortfolioModal() {
+    portfolioItems = Array.from(document.querySelectorAll('.portfolio-item'));
+    
+    portfolioItems.forEach((item, index) => {
+        item.addEventListener('click', () => {
+            openModal(index);
+        });
+    });
+}
+
+// Open modal with specific index
+function openModal(index) {
+    currentIndex = index;
+    const item = portfolioItems[index];
+    
+    // Set modal content
+    modalImage.src = item.querySelector('img').src;
+    modalImage.alt = item.querySelector('.portfolio-title').textContent;
+    modalTitle.textContent = item.querySelector('.portfolio-title').textContent;
+    modalDescription.textContent = `Дизайн проект #${index + 1} - ${item.querySelector('.portfolio-category').textContent}`;
+    
+    // Show modal
+    portfolioModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    
+    // Animate content after a short delay
+    setTimeout(() => {
+        modalImage.classList.add('active');
+        modalInfo.classList.add('active');
+    }, 50);
+}
+
+// Close modal
+function closeModalFunc() {
+    modalImage.classList.remove('active');
+    modalInfo.classList.remove('active');
+    
+    setTimeout(() => {
+        portfolioModal.classList.remove('active');
+        document.body.style.overflow = '';
+    }, 300);
+}
+
+// Navigation functions
+function showPrev() {
+    currentIndex = (currentIndex - 1 + portfolioItems.length) % portfolioItems.length;
+    updateModalContent();
+}
+
+function showNext() {
+    currentIndex = (currentIndex + 1) % portfolioItems.length;
+    updateModalContent();
+}
+
+// Update modal content with animation
+function updateModalContent() {
+    // Hide current content
+    modalImage.classList.remove('active');
+    modalInfo.classList.remove('active');
+    
+    setTimeout(() => {
+        const item = portfolioItems[currentIndex];
+        modalImage.src = item.querySelector('img').src;
+        modalImage.alt = item.querySelector('.portfolio-title').textContent;
+        modalTitle.textContent = item.querySelector('.portfolio-title').textContent;
+        modalDescription.textContent = `Дизайн проект #${currentIndex + 1} - ${item.querySelector('.portfolio-category').textContent}`;
+        
+        // Show new content
+        modalImage.classList.add('active');
+        modalInfo.classList.add('active');
+    }, 300);
+}
+
+// Event listeners
+closeModal.addEventListener('click', closeModalFunc);
+prevBtn.addEventListener('click', showPrev);
+nextBtn.addEventListener('click', showNext);
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+    if (portfolioModal.classList.contains('active')) {
+        if (e.key === 'Escape') {
+            closeModalFunc();
+        } else if (e.key === 'ArrowLeft') {
+            showPrev();
+        } else if (e.key === 'ArrowRight') {
+            showNext();
+        }
+    }
+});
+
+// Close modal when clicking outside content
+portfolioModal.addEventListener('click', (e) => {
+    if (e.target === portfolioModal) {
+        closeModalFunc();
+    }
+});
+
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    initPortfolioModal();
+    
+    // Other initialization code...
+});
+
+function createParticles() {
+    const particlesContainer = document.getElementById('particles');
+    const particleCount = 30;
+    
+    for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        
+        // Random size between 5px and 15px
+        const size = Math.random() * 10 + 5;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        
+        // Random position
+        particle.style.left = `${Math.random() * 100}%`;
+        particle.style.top = `${Math.random() * 100 + 100}%`;
+        
+        // Random animation duration between 10s and 20s
+        const duration = Math.random() * 10 + 10;
+        particle.style.animationDuration = `${duration}s`;
+        
+        // Random delay
+        particle.style.animationDelay = `${Math.random() * 5}s`;
+        
+        // Ensure particles are below modal
+        particle.style.zIndex = '0';
+        
+        particlesContainer.appendChild(particle);
+    }
+}
+    // Pause animation on hover
+    document.querySelector('.recent-works-track').addEventListener('mouseenter', function() {
+        this.style.animationPlayState = 'paused';
+    });
+    
+    document.querySelector('.recent-works-track').addEventListener('mouseleave', function() {
+        this.style.animationPlayState = 'running';
+    });
+    
+    // Touch events for mobile
+    let touchStartX = 0;
+    let isDragging = false;
+    const track = document.querySelector('.recent-works-track');
+    
+    track.addEventListener('touchstart', function(e) {
+        touchStartX = e.touches[0].clientX;
+        isDragging = true;
+        this.style.animationPlayState = 'paused';
+    }, { passive: true });
+    
+    track.addEventListener('touchmove', function(e) {
+        if (!isDragging) return;
+        const touchX = e.touches[0].clientX;
+        const diff = touchX - touchStartX;
+        this.style.transform = `translateX(${diff}px)`;
+    }, { passive: true });
+    
+    track.addEventListener('touchend', function() {
+        isDragging = false;
+        this.style.animationPlayState = 'running';
+        this.style.transform = '';
+    }, { passive: true });
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const musicControl = document.getElementById('musicControl');
+    const musicBtn = document.getElementById('musicBtn');
+    const musicIcon = document.getElementById('musicIcon');
+    const volumeSlider = document.getElementById('volumeSlider');
+    const backgroundMusic = document.getElementById('backgroundMusic');
+    
+    // Установка начальной громкости
+    backgroundMusic.volume = 0.5;
+    
+    // Функция для переключения звука
+    function toggleSound() {
+        if (backgroundMusic.paused || backgroundMusic.volume === 0) {
+            backgroundMusic.volume = volumeSlider.value;
+            backgroundMusic.play().catch(e => console.log(e));
+            musicIcon.classList.remove('fa-volume-mute');
+            musicIcon.classList.add('fa-volume-up');
+        } else {
+            backgroundMusic.volume = 0;
+            musicIcon.classList.remove('fa-volume-up');
+            musicIcon.classList.add('fa-volume-mute');
+        }
+    }
+    
+    // Обработчик клика по кнопке
+    musicBtn.addEventListener('click', toggleSound);
+    
+    // Обработчик изменения громкости
+    volumeSlider.addEventListener('input', function() {
+        backgroundMusic.volume = this.value;
+        
+        // Обновляем иконку
+        if (this.value == 0) {
+            musicIcon.classList.remove('fa-volume-up');
+            musicIcon.classList.add('fa-volume-mute');
+        } else {
+            musicIcon.classList.remove('fa-volume-mute');
+            musicIcon.classList.add('fa-volume-up');
+        }
+    });
+    
+    // Имитация нажатия на кнопку громкости через 2 секунды
+    setTimeout(() => {
+        // Проверяем, не играет ли уже музыка
+        if (backgroundMusic.paused || backgroundMusic.volume === 0) {
+            // Добавляем анимацию нажатия
+            musicBtn.style.transform = 'scale(0.9)';
+            
+            // Вызываем функцию переключения звука
+            toggleSound();
+            
+            // Возвращаем кнопку в исходное состояние
+            setTimeout(() => {
+                musicBtn.style.transform = 'scale(1)';
+            }, 100);
+        }
+    }, 1000);
+    
+    // Попытка автоматического воспроизведения после первого взаимодействия
+    function enableAutoplay() {
+        backgroundMusic.volume = volumeSlider.value;
+        const playPromise = backgroundMusic.play();
+        
+        if (playPromise !== undefined) {
+            playPromise.catch(error => {
+                console.log("Автовоспроизведение заблокировано:", error);
+            });
+        }
+    }
+    
+    // Обработчик первого взаимодействия
+    function handleFirstInteraction() {
+        enableAutoplay();
+        document.removeEventListener('click', handleFirstInteraction);
+        document.removeEventListener('keydown', handleFirstInteraction);
+        document.removeEventListener('touchstart', handleFirstInteraction);
+    }
+    
+    // Добавляем обработчики для первого взаимодействия
+    document.addEventListener('click', handleFirstInteraction);
+    document.addEventListener('keydown', handleFirstInteraction);
+    document.addEventListener('touchstart', handleFirstInteraction);
+    
+    // Первая попытка воспроизведения (может быть заблокирована)
+    setTimeout(() => {
+        enableAutoplay();
+    }, 1000);
+});
+
+//раскрытие и скрытых работ 
+    document.addEventListener("DOMContentLoaded", function () {
+        const showMoreBtn = document.getElementById("showMoreBtn");
+        const hiddenItems = document.querySelectorAll(".hidden-work");
+        let isExpanded = false;
+
+    // Устанавливаем начальную стрелку (вниз)
+    showMoreBtn.innerHTML = '&#9660'; // или '&#9660;' для ▼
+
+        showMoreBtn.addEventListener("click", function () {
+            hiddenItems.forEach(item => {
+                item.style.display = isExpanded ? "none" : "block";
+            });
+
+showMoreBtn.innerHTML = isExpanded ? '&#9660;' : '&#9650;'; // ▼ и ▲
+            isExpanded = !isExpanded;
+
+
+        });
+    });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const portfolioItems = document.querySelectorAll('.portfolio-item');
+    const modal = document.getElementById('portfolioModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalTitle = document.getElementById('modalTitle');
+    const closeBtn = document.getElementById('closeModal');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const nbipBtn = document.getElementById('nbip');
+    const nbinBtn = document.getElementById('nbin');
+
+    let currentIndex = 0;
+
+    // Открытие модального окна при клике на работу
+    portfolioItems.forEach((item, index) => {
+        item.addEventListener('click', () => {
+            currentIndex = index;
+            openModal();
+        });
+    });
+
+    // Закрытие модального окна
+    function closeModal() {
+        modal.classList.remove('active');
+        document.body.style.overflow = ''; // Возвращаем скролл
+    }
+
+    // Открытие модального окна
+    function openModal() {
+        const item = portfolioItems[currentIndex];
+        modalImage.src = item.querySelector('img').src;
+        modalTitle.textContent = item.querySelector('.portfolio-title').textContent;
+        modalDescription.textContent = item.querySelector('.portfolio-category').textContent;
+        
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Блокируем скролл
+        
+        // Анимация появления
+        setTimeout(() => {
+            modalImage.classList.add('active');
+            modalInfo.classList.add('active');
+        }, 50);
+    }
+
+    // Навигация
+    function navigate(direction) {
+        currentIndex = (currentIndex + direction + portfolioItems.length) % portfolioItems.length;
+        updateModal();
+    }
+
+    // Обновление содержимого модального окна
+    function updateModal() {
+        // Анимация исчезновения
+        modalImage.classList.remove('active');
+        modalInfo.classList.remove('active');
+        
+        setTimeout(() => {
+            const item = portfolioItems[currentIndex];
+            modalImage.src = item.querySelector('img').src;
+            modalTitle.textContent = item.querySelector('.portfolio-title').textContent;
+            modalDescription.textContent = item.querySelector('.portfolio-category').textContent;
+            
+            // Анимация появления
+            modalImage.classList.add('active');
+            modalInfo.classList.add('active');
+        }, 300);
+    }
+    const mobilePrevBtn = document.getElementById('mobilePrevBtn');
+    const mobileNextBtn = document.getElementById('mobileNextBtn');
+    // Обработчики для мобильных стрелок
+    mobilePrevBtn.addEventListener('click', () => navigate(-1));
+    mobileNextBtn.addEventListener('click', () => navigate(1));
+
+    // Обработчики событий
+    closeBtn.addEventListener('click', closeModal);
+    prevBtn.addEventListener('click', () => navigate(-1));
+    nextBtn.addEventListener('click', () => navigate(1));
+
+    // Закрытие при клике вне контента
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+    // Навигация с клавиатуры
+    document.addEventListener('keydown', (e) => {
+        if (!modal.classList.contains('active')) return;
+        
+        if (e.key === 'Escape') {
+            closeModal();
+        } else if (e.key === 'ArrowLeft') {
+            navigate(-1);
+        } else if (e.key === 'ArrowRight') {
+            navigate(1);
+        }
+
+    });
+
+    function closeModal() {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    function navigate(direction) {
+        currentIndex = (currentIndex + direction + portfolioItems.length) % portfolioItems.length;
+        updateModal();
+    }
+
+    function updateModal() {
+        const item = portfolioItems[currentIndex];
+        modalImage.src = item.querySelector('img').src;
+        modalTitle.textContent = item.querySelector('.portfolio-title').textContent;
+    }
+});
+// Burger Menu Functionality with Particles Animation
+document.addEventListener('DOMContentLoaded', function() {
+    // Elements
+    const burgerMenu = document.getElementById('burgerMenu');
+    const mobileNav = document.getElementById('mobileNav');
+    const closeMobileMenuBtn = document.getElementById('closeMobileMenu');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-links a');
+    const body = document.body;
+    const particlesContainer = document.getElementById('mobileNavParticles');
+    
+    // Particle colors using your theme variables
+    const particleColors = [
+        'rgba(106, 48, 147, 0.7)',  // var(--purple)
+        'rgba(156, 77, 202, 0.7)',  // var(--purple-light)
+        'rgba(255, 215, 0, 0.7)',   // var(--gold)
+        'rgba(255, 236, 139, 0.7)'  // var(--gold-light)
+    ];
+    // Create particles for mobile menu background
+    function createParticles() {
+        particlesContainer.innerHTML = '';
+        const particleCount = window.innerWidth < 768 ? 15 : 25;
+        
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'mobile-nav-particle';
+            
+                    // Уменьшите время анимации и уберите задержку
+            particle.style.animationDuration = `${Math.random() * 2 + 2}s`; // 2-4s
+            particle.style.animationDelay = '0s'; // Без задержки
+
+            // Random size between 5px and 20px
+            const size = Math.random() * 15 + 5;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            
+            // Random position
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.top = `${Math.random() * 100 + 100}%`;
+            
+            // Random animation duration between 10s and 25s
+            const duration = Math.random() * 15 + 10;
+            particle.style.animationDuration = `${duration}s`;
+            particle.style.animationDelay = `${Math.random() * 5}s`;
+            
+            // Random color from palette
+            const color = particleColors[Math.floor(Math.random() * particleColors.length)];
+            particle.style.background = color;
+            
+            // Random blur effect for some particles
+            if (Math.random() > 0.7) {
+                particle.style.filter = `blur(${Math.random() * 2 + 1}px)`;
+            }
+            
+            particlesContainer.appendChild(particle);
+        }
+    }
+
+    // Toggle mobile menu with animations
+    function toggleMobileMenu() {
+        burgerMenu.classList.toggle('active');
+        mobileNav.classList.toggle('active');
+        
+        if (mobileNav.classList.contains('active')) {
+                createParticles(); // Создаём частицы сразу
+    particlesContainer.style.opacity = '0.6'; // Сразу показываем
+    particlesContainer.style.transition = 'opacity 0.1s'; // Быстрое появление
+
+            // Menu opening
+            body.style.overflow = 'hidden';
+            createParticles();
+            
+            // Accessibility
+            burgerMenu.setAttribute('aria-expanded', 'true');
+            mobileNav.setAttribute('aria-hidden', 'false');
+            
+            // Focus first menu item after animation
+            setTimeout(() => {
+                mobileNavLinks[0]?.focus();
+            }, 300);
+        } else {
+            // Menu closing
+            body.style.overflow = '';
+            burgerMenu.setAttribute('aria-expanded', 'false');
+            mobileNav.setAttribute('aria-hidden', 'true');
+            
+            // Return focus to burger button
+            burgerMenu.focus();
+        }
+    }
+
+    // Close mobile menu
+    function closeMobileMenu() {
+        if (mobileNav.classList.contains('active')) {
+            toggleMobileMenu();
+        }
+    }
+
+    // Event Listeners
+    burgerMenu.addEventListener('click', toggleMobileMenu);
+    closeMobileMenuBtn.addEventListener('click', closeMobileMenu);
+
+    // Close when clicking on links
+    mobileNavLinks.forEach(link => {
+        link.addEventListener('click', closeMobileMenu);
+    });
+
+    // Close when clicking outside menu
+    mobileNav.addEventListener('click', function(e) {
+        if (e.target === mobileNav) {
+            closeMobileMenu();
+        }
+    });
+
+    // Close with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
+            closeMobileMenu();
+        }
+    });
+
+    // Handle window resize
+    function handleResize() {
+        if (window.innerWidth > 768 && mobileNav.classList.contains('active')) {
+            closeMobileMenu();
+        }
+    }
+
+    // Touch events for swipe to close
+    let touchStartX = 0;
+    mobileNav.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].clientX;
+    }, { passive: true });
+
+    mobileNav.addEventListener('touchend', function(e) {
+        const touchEndX = e.changedTouches[0].clientX;
+        if (touchEndX < touchStartX - 50) {
+            closeMobileMenu();
+        }
+    }, { passive: true });
+
+    // Initialize
+    burgerMenu.setAttribute('aria-label', 'Toggle menu');
+    burgerMenu.setAttribute('aria-controls', 'mobileNav');
+    burgerMenu.setAttribute('aria-expanded', 'false');
+    mobileNav.setAttribute('aria-hidden', 'true');
+    
+    // Create initial particles (hidden until menu opens)
+    createParticles();
+    particlesContainer.style.opacity = '0';
+    
+    // Watch for menu state changes to show/hide particles
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.attributeName === 'class') {
+                particlesContainer.style.opacity = mobileNav.classList.contains('active') ? '0.6' : '0';
+            }
+        });
+    });
+    
+    observer.observe(mobileNav, {
+        attributes: true,
+        attributeFilter: ['class']
+    });
+    
+    window.addEventListener('resize', handleResize);
+});
+
+  document.querySelectorAll('.portfolio-item .arrow').forEach(arrow => {
+    arrow.addEventListener('click', function() {
+      const details = this.closest('.portfolio-item').querySelector('.details');
+      details.style.right = details.style.right === '0px' ? '-100%' : '0px';
+    });
+  });
+
+    </script>
+</body>
+</html>
